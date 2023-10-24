@@ -1,0 +1,93 @@
+When finding a solution to a problem be working with hard code values(Known values) until evrything works as expectect then you can substitute the known inputs with some dynamic inputs.
+
+Unary||Modify Operators
+------------------------
+Pre-increament||decreament --> Substitution --> Evaluation --> Assignment -->Pos-increament||decreament
+
+Priority is given to moodify operator anytime.
+
+sizeOf() 
+--------
+  - Is a predifine fun. returns size of [ variable, data-type, expression, pointer, ...]
+  
+limits.h()
+-----------
+  - Contains some global variables which are constant.
+  - Gives the limits of each data-type,
+  
+Control statements
+--------------------
+- Block of statements executes if condition is true.
+- For if block: else block is optional.
+- For else block: if block is compulsory else error.
+     Questions
+	 ----------
+	 1. Check if inputed num is even or odd. num%2==0
+
+- while loop : executes a block of stmts repeatedly as long as condition is true.
+- All integers +ve and _ve evaluate to true except 0.
+    Questions
+	------------
+	1. printing all values possible for a given data-type in its circle.
+	   - assing i to 1.
+	   - use i in the while condition. It will print all the possible values of the data-type in the circle until the value of i becaomes 0, then while loop will terminate.
+	   
+    2. print 1-10 numbers.
+	   - i<=10
+	   
+	3. Print only even numbers in a given range.
+	   - use while loop for range condition checking. ++i<j  where i(Starting) and j(end) are inputs
+	   - Use if stmt for printing the even numbers.
+
+- for loop: initialization --> Condition--> If true(execute block of statememt then go to executing the modify||unary operator) --> If false terminate.
+    Questions
+	----------
+	1. Find sum of first n numbers. i.e., i=1; i<=10; ++i
+	   - To enter your own inputs unlike hardcoding like above: 1-10
+	   - Input the satrting value into some i variable and the end value into some n variable. i=i; i<=n; ++num
+
+In C lang if you are not initializing any local variable, it will be implicitly initialized with a G.V value and any operation you perform using this G.V the resulting o/p is a G.V
+
+    2. Check if a number is a perfect number or not.
+	Def: Sum  of factors of a given number except itself equals to the same number. A factor is a num which divides a given number fully(With zero as remainder) 
+	    input: number
+		Processing: - iterate from i=1 to the number except the number: Use a for loop. i.e., i<number
+		                - Inside for loop check if condition: n%i==0
+					        - Inside if condition: add i to sum
+					-Outside for loop check if sum == number: If true-->Perfect number.Else-->Not perfect number.
+					
+Patterns in C
+-----------------
+- We always need two for loops.
+  - Outer loop to iterate over the rows
+       >=||<= && ++i, i++ && --i, i--
+  - Inner loop(s) to iterate over the columns. You can use two inner loops two print 2 separate patterns. i.e spaces on the left and stars on the right.
+      >=||<= && ++i, i++ && --i, i--
+  - Only conditions will be modified so that you come up with the pattern you need.
+-To write logic for prining the triangle star pattern you require 3 inner for loops. The logic to last two for loops that print the stars are the same
+  -This won't be a perfect triangle though.Nothing but it won't have a sharp apex.
+-To write logic to print a perfect triangle with a sharp apex we need to know some few things:
+   -Generally on the console we can print 80 characters max horizontally.
+      -Our first star we need to print at the 40th position.
+	  -Before you print that start you need to print 39 spaces.
+	  -Condtion to fill in spaces. 1st row 39 spaces we need to print: The number of spaces is decreasing gradually; so (c/2-i) where c=80
+	  -To print the stars: Odd numbers logic we need to write. (2i-1)
+   -Vertically we can print 25 characters, not much important because we can scroll.
+-Don't bother about the right spaces when printing this pattern as the escape char \n will take care of everything hence no need to write logic to print those spaces.
+
+Logical programming questions
+------------------------------
+Q1. A program to find the factorial of a given number.
+fact=1
+input: Number
+Process:  for i<=number
+               fact=fact*i
+   -Initialize fact wit 1.
+   
+Q2. A program to find the sum of digits in a given number.
+sum=0
+input: Number
+Process:- Condition: while number>0
+        - Use modulus operator to find the remainder.
+        - Add the remainder to sum
+		- divide quotient by 10.
