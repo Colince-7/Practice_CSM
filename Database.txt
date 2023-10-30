@@ -1,0 +1,305 @@
+Database
+-----------------------------------
+- Install MySQL.
+- CUI(MySQLCommandLineClient) and GUI(Workbench)
+- How to create db
+How to work on DB
+- DDL: Create, Drop, Alter
+    +. How to create a DB
+	+. DataTypes.
+	+. cONSTRAINTS.
+	+. Drop
+	+. Alter Table.
+	    -> Adding new column.
+		->Modifying an exeisting column
+		-> Renaming an Existing column
+		
+-DML: insert, Update, Delete
+-DQL: (Data Query Language) : Select.
+    +. Select
+	+. Select distinct.
+	+. Column Alias
+	+. Filtering WHERE
+	
+
+
+    Session-3
+	------------
+	-------------
+- Select database(); --> Tells the current db on which your are currently working.
+- use database; --> To use a database.
+- You can use select command as a calculator in MySQL: I.e., select 40*5;
+- Syntax of select statement: help select
+-  Select * from table;  --> All the columns.
+- Select col1, col2, col3, ... from table;  --> some of the columns. This is called projection.
+- Select distinct col1_name, col2_name from table; --> Distinct is a key-word which is used to suppress duplicate records.
+- select version(); check the  urrent version of your MySQL.
+- Select current_date;
+- You can write two or more queries by separating them using a comma. i.e., select version(), current_date;
+- You can break your query into multi-line, you will see an arrow symbol.
+- To come out of the multi-line query if you want to cancel; just use: \c; or Ctrl +c 
+
+   WHERE clause
+   -------------
+- Acting as the condition to filter our relevant data.
+- Operators to use alongside where clause:
+- If you type;  HELP FUNCTIONS you will be able to see several types of opreators.
+ 	
+
+Operators
+-----------
+- For a specific type of operator; help Comparison Operators
+    1. AND
+    2. OR
+    3.
+- ...etc
+
+- Counting Rows:
+----------------
+- Select employee records who are getting salary between 5000 to 10000;
+- Select all employees who belong to dept_id
+
+Null value treatment
+--------------------
+
+Means nothing or unkown value.
+We cannot compare Null with another NullIf Null is present i an expression then the result of that expresiion will be Null.
+
+IfNull() funtion:
+------------------
+Used to check if the value is Null then it returns exp2 else return exp1
+ifNull(exp1, exp2);
+Select IfNull(Commision_pct, 1.1) from employees;
+
+IsNull(exp1)
+-------------
+- Used to check if a column consist a null avalue or not.
+
+NullIf(exp1, exp2)
+---------------------
+
+
+
+
+
+   1. INSERT
+   ----------
+   ----------
+   
+   Syntax: INSERT INTO <table_name> [(Col1, Cool2, ...)] VALUES(val1, val2, ...);
+   
+        - In insert stmt the column list is optional. If we are not proving column name list, then we must provide the values in the sequence present in the table.
+		- If we are mentioning column list then we should mention the values in the order in which they are prestnt in the column list.
+		-
+   
+   2. DELETE 
+   -----------
+   ------------
+     Syntax:  2.1 : Delete all records from the table.  DELETE FROM <table_name>;
+	          ---
+			  2.2 :  
+			  ---
+			  
+			  
+			  
+			  
+			  
+[11:48] Bibhuranjan Mohanty
+Write a SQL query to list the employees’ name, increased their salary by 15%, and expressed as number of Dollars.
+[11:53] Bibhuranjan Mohanty
+SELECT FIRST_NAME,LAST_NAME ,SALARY ,(SALARY * 15/100) AS INCREMENT,(SALARY + (SALARY * 15/100)) AS TOTALSALARY FROM EMPLOYEES;
+[11:57] Bibhuranjan Mohanty
+Write a SQL query to list the employee's name and job name as a format of "Employee & Job".
+[12:11] Bibhuranjan Mohanty
+SELECT EMPLOYEE_ID,SALARY,COMMISSION_PCT,(SALARY * COMMISSION_PCT) AS COMMISSION,(SALARY + (SALARY * COMMISSION_PCT)) AS TOTALSALARY FROM EMPLOYEES;
+[12:12] Bibhuranjan Mohanty
+SELECT EMPLOYEE_ID,SALARY,(SALARY * COMMISSION_PCT) AS COMMISSION FROM EMPLOYEES;
+
+[12:12] Bibhuranjan Mohanty
+1. Return complete information about the employees.
+2. Write a SQL query to find the salaries of all employees.
+3. Write a SQL query to find the unique designations of the employees. Return job name.
+4. Write a SQL query to list the employees’ name, increased their salary by 15%, and expressed as number of Dollars.
+5. Write a SQL query to list the employee's name and job name as a format of "Employee & Job".
+6. Write a query in SQL to produce the output of employees as follows.
+  Employee JONAS(manager)
+7.Write a SQL query to find those employees with hire date in the format like February 22, 1991. Return employee ID, employee name, salary, hire date.
+8. Write a SQL query to count the number of characters except the spaces for each employee name. Return employee name length.
+9. Write a SQL query to find the employee ID, salary, and commission of all the employees.
+10. Write a SQL query to find the unique department with jobs. Return department ID, Job name.
+11. Write a SQL query to find those employees who do not belong to the department 2001. Return complete information about the employees.
+12. Write a SQL query to find those employees who joined before 1991. Return complete information about the employees.
+13. Write a SQL query to calculate the average salary of employees who work as analysts. Return average salary.
+14. Write a SQL query to find the details of the employee ‘BLAZE’.
+15. Write a SQL query to identify employees whose commissions exceed their salaries. Return complete information about the employees.
+16. Write a SQL query to identify those employees whose salaries exceed 3000 after receiving a 25% salary increase. Return complete information about the employees.
+17. Write a SQL query to find the names of the employees whose length is six. Return employee name.
+18. Write a SQL query to find out which employees joined in the month of January. Return complete information about the employees.
+19. Write a SQL query to separate the names of employees and their managers by the string 'works for'.
+20. Write a SQL query to find those employees whose designation is ‘CLERK’. Return complete information about the employees.
+
+[15:47] Bibhuranjan Mohanty
+SELECT * from employees where salary>5000 and salary<10000;
+[15:47] Bibhuranjan Mohanty
+SELECT * from employees where salary between 5000 and 10000;
+[15:48] Bibhuranjan Mohanty
+SELECT * from employees where salary>=5000 and salary<=10000;
+[15:53] Bibhuranjan Mohanty
+SELECT * from employees where DEPARTMENT_ID=90 OR DEPARTMENT_ID=30 OR DEPARTMENT_ID =100 ;
+[15:53] Bibhuranjan Mohanty
+SELECT * from employees where  DEPARTMENT_ID IN(90,30,100) ;
+[16:10] Bibhuranjan Mohanty
+INSERT INTO EMPLOYEES(EMPLOYEE_ID, FIRST_NAME , LAST_NAME   ,EMAIL    , PHONE_NUMBER       , HIRE_DATE  ,JOB_ID     , SALARY   , COMMISSION_PCT , MANAGER_ID , DEPARTMENT_ID) VALUES(800,'ALOK','KUMAR','ALOKKUMAR','456.123.345','1998-12-05','AC_ACCOUNT',NULL,NULL,101,110);
+[16:10] Bibhuranjan Mohanty
+UPDATE EMPLOYEES SET SALARY=8000 where EMPLOYEE_ID=800;
+[16:10] Bibhuranjan Mohanty
+SELECT EMPLOYEE_ID ,SALARY ,COMMISSION_PCT , (SALARY+(SALARY*COMMISSION_PCT*100)) AS TOTAL_SALARY FROM EMPLOYEES;
+
+
+NULL values
+ 
+   NULL = NULL
+ 
+ 
+   NULL  means nothing or it is an unknown value
+ 
+   We can not compare NULL with another NULL
+ 
+   If NULL is present in an expression then result of the expression will be NULL
+ 
+   SELECT NULL+23 ; -> NULL
+ 
+   
+ 
+   INSERT INTO EMPLOYEES(EMPLOYEE_ID, FIRST_NAME , LAST_NAME   ,EMAIL    , PHONE_NUMBER       , HIRE_DATE  ,JOB_ID     , SALARY   ,    COMMISSION_PCT , MANAGER_ID , DEPARTMENT_ID) VALUES(800,'ALOK','KUMAR','ALOKKUMAR','456.123.345','1998-12-  05','AC_ACCOUNT',NULL,NULL,101,110);
+ 
+   UPDATE EMPLOYEES SET SALARY=8000 where EMPLOYEE_ID=800;
+ 
+   SELECT EMPLOYEE_ID ,SALARY ,COMMISSION_PCT , (SALARY+(SALARY*COMMISSION_PCT*100)) AS TOTAL_SALARY FROM EMPLOYEES;
+ 
+    IFNULL() FUnction :
+   ------------------
+ 
+   - IFNULL function is used to check if the value is null then it returns exp2 else return exp1
+   - IFNULL(expr1,expr2);
+ 
+   - Select Commission_pct from employees;
+ 
+   - Select IFNULL(Commission_pct,1.1) from employees;
+ 
+   - mysql> SELECT IFNULL(1,0);
+        -> 1
+     mysql> SELECT IFNULL(NULL,10);
+        -> 10
+     mysql> SELECT IFNULL(1/0,10);
+        -> 10
+     mysql> SELECT IFNULL(1/0,'yes');
+        -> 'yes'
+ 
+   ISNULL(expr1) :
+   ---------------
+ 
+   - It is used to check a column consisting any null value or not.
+ 
+   - Example:
+ 
+     mysql> SELECT ISNULL(1+1);
+        -> 0
+     mysql> SELECT ISNULL(1/0);
+        -> 1
+ 
+   - SELECT RECORDS FROM EMPLOYEES TABLE  WHERE COMMISSION_PCT IS NOT NULL
+ 
+      SELECT * FROM EMPLOYEES WHERE COMMISSION_PCT IS NOT NULL;
+      SELECT * FROM EMPLOYEES WHERE COMMISSION_PCT IS  NULL;
+ 
+   
+   NULLIF(expr1,expr2)
+   -------------------
+    Description:
+         Returns NULL if expr1 = expr2 is true, otherwise returns expr1. 
+         This is the same as CASE WHEN expr1 = expr2 THEN NULL ELSE expr1 END.
+         The return value has the same type as the first argument.
+    Syntax:
+            NULLIF(expr1,expr2)
+ 
+     
+    URL: https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html
+ 
+    Examples:
+      mysql> SELECT NULLIF(1,1);
+        -> NULL
+      mysql> SELECT NULLIF(1,2);
+        -> 1
+ 
+
+   - SELECT EMPLOYEE_ID,NULLIF(COMMISSION_PCT,8.0) FROM EMPLOYEES ;
+ 
+   
+ 
+  MYSQL> SELECT EMPLOYEE_ID ,SALARY ,COMMISSION_PCT , (SALARY+(SALARY*IFNULL(COMMISSION_PCT,0)*100)) AS TOTAL_SALARY FROM EMPLOYEES;
+ 
+ 
+   ISNULL(expr)
+   -------------------
+   Name: 'ISNULL'
+   Description:
+   Syntax:
+   ISNULL(expr)
+ 
+   If expr is NULL, ISNULL() returns 1, otherwise it returns 0.
+ 
+   URL: https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html
+ 
+   Examples:
+   mysql> SELECT ISNULL(1+1);
+        -> 0
+   mysql> SELECT ISNULL(1/0);
+        -> 1
+		
+		
+[16:56] Bibhuranjan Mohanty
+SELECT COALESCE(COMMISSION_PCT,10,20) FROM EMPLOYEES ;
+[16:56] Bibhuranjan Mohanty
+ame: 'COALESCE'
+
+Description:
+
+Syntax:
+
+COALESCE(value,...)
+ 
+Returns the first non-NULL value in the list, or NULL if there are no
+
+non-NULL values.
+ 
+The return type of COALESCE() is the aggregated type of the argument
+
+types.
+ 
+URL: https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html
+ 
+Examples:
+
+mysql> SELECT COALESCE(NULL,1);
+
+        -> 1
+
+mysql> SELECT COALESCE(NULL,NULL,NULL);
+
+        -> NULL
+
+---------
+JOINS
+---------
+[16:37] Bibhuranjan Mohanty
+SELECT EMPLOYEE_ID ,FIRST_NAME ,DEPARTMENT_ID FROM EMPLOYEES;
+[16:37] Bibhuranjan Mohanty
+SELECT EMPLOYEES.EMPLOYEE_ID ,EMPLOYEES.FIRST_NAME ,DEPARTMENTS.DEPARTMENT_NAME FROM EMPLOYEES INNER JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID;
+[16:37] Bibhuranjan Mohanty
+SELECT E.EMPLOYEE_ID ,E.FIRST_NAME ,D.DEPARTMENT_NAME FROM EMPLOYEES AS E INNER JOIN DEPARTMENTS AS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID;   
+SELECT E.EMPLOYEE_ID ,E.FIRST_NAME ,D.DEPARTMENT_NAME FROM EMPLOYEES AS E INNER JOIN DEPARTMENTS AS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID WHERE D.DEPARTMENT_NAME LIKE 'IT';
+[16:41] Bibhuranjan Mohanty
+SELECT D.Department_NAME,COUNT(E.EMPLOYEE_ID) FROM EMPLOYEES AS E INNER JOIN DEPARTMENTS AS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID GROUP BY D.DEPARTMENT_NAME;
+[16:42] Bibhuranjan Mohanty
+SELECT D.Department_NAME,COUNT(E.EMPLOYEE_ID) FROM EMPLOYEES AS E INNER JOIN DEPARTMENTS AS D ON E.DEPARTMENT_ID=D.DEPARTMENT_ID GROUP BY D.DEPARTMENT_NAME HAVING DEPARTMENT_NAME LIKE 'SHIPPING';
