@@ -1,0 +1,673 @@
+
+SELECT VERSION(),CURRENT_DATE;
+
+Not Case Sensitive
+
+We can use My SQL As Simple Calculator
+
+ SELECT SIN(PI()/4) ,(4+1) * 5;
+
+We can also write multiple statements on a single line .
+
+ SELECT VERSION() ; SELECT NOW();
+
+Multiline Commands :
+
+
+Canceling a Command
+
+ - If you decide you don't want to execute a command  that you are in the process of entering 
+
+   cancel it by typing \c
+
+ - SELECT 
+ -> USER()
+ -> \c
+
+-> Selecting ALL ROW
+
+-> Selecting a Particular Row
+
+-> Selecting a Particular Row using Operators
+
+   OPERATORS :
+   
+    !=
+    <
+    <=
+    <=>
+    =
+    >
+    >=
+    BETWEEN AND
+    COALESCE
+    GREATEST
+    IN
+    INTERVAL
+    IS
+    IS NOT
+    IS NOT NULL
+    IS NULL
+    ISNULL
+    LEAST
+    NOT BETWEEN
+    NOT IN
+
+    !
+    AND
+    ASSIGN-EQUAL
+    ASSIGN-VALUE
+    OR
+    XOR
+
+    LIKE
+
+-> SELECTING PARTICULAR COLUMN
+
+-> SORTING DATA
+
+-> Working with NULL VALUES
+
+   - NULL means missing value or unknown value 
+   - To Test for NULL -> you can not use arithmatic comparision operators
+   - You Must Use :
+        ISNULL
+        IS NOT NULL
+
+-> PATTERN MATCHING
+
+   - MYSQL PROVIDES 
+
+     1. Standard SQL Pattern Matching  
+     2. Regular expression Pattern Matching 
+
+   - To perform Pattern matching ,use the LIKE ,NOT LIKE 
+   - By Default ,Patterns are case Sensitive
+
+   - Special Characters  
+      _ Used to match any single character
+      
+      % Used to match an arbitary number of Characters
+
+-> To find names beginning with 'b'
+
+   To find names ending with 'fy'
+
+   To find names containing a 'W'
+   
+   To find names containiong exactly five characters ,use the _pattern 	character
+
+   
+
+-> Regular Expression :
+  
+   - Matches any Single Character :
+
+     -> A character class[...] matches any character within brackets
+
+       For Example :
+    
+        [abc] matches a , b, or c
+
+    -> To name a range of characters 
+
+     - use a dash [a-z] matches any lowercase letter
+     - use a dash [A-Z] mathces any uppercase letter
+     - whereas [0-9] mathces any digit.
+
+    -> Matches zero or more instances of the thing preceding it.
+   
+      For Example :
+  
+     - x* matches any number of x characters
+
+     - [0-9]* mathces any number of digits 
+    
+     - * mathces  any number of anything
+
+    -> To anchor a pattern  so that it must match the beginneing  or end of the value being tested
+
+     - use ^ at the beginning 
+     - or $ at the end of the pattern
+
+    -> To find names beginning with b,
+       use ^ to match the beginning of the name.
+
+       SELECT * FROM <table> Where name REGEXP "^b"
+
+    -> To find names ending with 'fy' ,use '$' to match end of the name.
+
+       SELECT * FROM <table> WHERE name REGEXP "fy$"
+
+    COUNTING Rows :
+   ----------------
+
+    SELECT employee records who are getting salary between 5000 to 10000;
+
+    SELECT all employees who belong to department_id 90,30,100;
+
+    
+    PREDEFINED FUNCTION :
+
+    1. AGGREGATE FUNCTIONS
+       a. AVG
+
+          Returns the average value of expr. The DISTINCT option can be used to
+          return the average of the distinct values of expr.
+
+          If there are no matching rows, AVG() returns NULL. The function also
+          returns NULL if expr is NULL.
+
+          EXAMPLE :
+            FIND AVG SALARY OF EMPLOYEE
+            
+            SELECT AVG(SALARY) FROM EMPLOYEES;
+  
+       b. COUNT
+       c. COUNT DISTINCT
+       d. GROUP_CONCAT
+       e. MAX
+       f. MIN
+       g. SUM
+   
+
+       String Functions :
+       ----------------
+
+      1.
+
+       LCASE / LOWER
+       UCASE / UPPER
+
+       SELECT FIRST_NAME FROM EMPLOYEES;
+       SELECT LCASE(FIRST_NAME) FROM EMPLOYEES;
+       SELECT UCASE(FIRST_NAME) FROM EMPLOYEES;
+       
+
+       2. 
+
+         LENGTH
+
+         
+       3. 
+         LIKE
+         NOT LIKE
+
+       4.
+         REGEXP
+         NOT REGEXP
+
+       5. 
+         ASCII
+         BIN
+         OCT
+         HEX
+
+       6.
+         CONCAT
+         CONCAT_WS
+
+       7. 
+          LPAD
+          RPAD
+
+       8.
+         LTRIM - Kills spaces from left(leading)
+         RTRIM - Kills spaces from right(Trailing)
+         TRIM  - Kills leading and trailing spaces
+
+         SELECT '   TEST   ' ;
+         SELECT LENGTH('   TEST   ') ;
+         SELECT LTRIM('   TEST   ') ;
+         SELECT LENGTH(LTRIM('   TEST   ')) ;
+         SELECT RTRIM('   TEST   ') ;
+         SELECT LENGTH(RTRIM('   TEST   ')) ;
+         SELECT TRIM('   TEST   ');
+         SELECT LENGTH(TRIM('   TEST   '));
+
+        9. POSITION
+            
+          - It is used to find position(First Occurance) of a substring within a string
+              
+
+          - Syntax :
+
+              POSITION (substr IN str)
+
+          - EXAMPLE :
+            
+            SELECT  POSITION('WEL' IN 'WELCOME TO INDIA');
+             
+            SELECT  POSITION('L' IN 'WELCOME TO INDIA');
+
+            SELECT  POSITION('I' IN 'WELCOME TO INDIA');
+
+            SELECT FIRST_NAME , POSITION('A' IN FIRST_NAME) FROM EMPLOYEES ;
+
+            Task:
+            Find the Position of Last Occurance of a substring in a string.
+
+      
+         10. REVERSE
+
+             SELECT FIRST_NAME , REVERSE(FIRST_NAME) FROM EMPLOYEES;
+
+         11. SUBSTR / SUBSTRING
+
+             Syntax :
+
+             SUBSTR(str,pos), 
+             SUBSTR(str FROM pos), 
+             SUBSTR(str,pos,len), 
+             SUBSTR(str FROM pos FOR len)
+             
+             SUBSTRING(str,pos), 
+             SUBSTRING(str FROM pos), 
+             SUBSTRING(str,pos,len),
+             SUBSTRING(str FROM pos FOR len)
+
+             Example :
+              select SUBSTR('WELCOME TO KENYA',12);
+              select SUBSTR('WELCOME TO KENYA' FROM 12);
+
+              select SUBSTR('WELCOME TO KENYA',12,3);
+              select SUBSTR('WELCOME TO KENYA',-5);
+              select SUBSTR('WELCOME TO KENYA',-5,3);
+            
+         12. RIGHT
+             LEFT
+
+              select LEFT('WELCOME TO KENYA',8);
+              select RIGHT('WELCOME TO KENYA',8);
+ 
+         13. SOUNDEX
+
+             - Returns a soundex string from str, or NULL if str is NULL. 
+             - Two strings that sound almost the same should have identical soundex strings. 
+             - A standard soundex string is four characters long, but the SOUNDEX()
+               function returns an arbitrarily long string. 
+
+             - You can use SUBSTRING() on the result to get a standard soundex string. 
+
+             - All nonalphabetic characters in str are ignored. 
+
+             - All international alphabetic characters outside the A-Z range are treated as 
+               vowels.
+
+             - *Important*:
+
+               When using SOUNDEX(), you should be aware of the following limitations:
+
+              o This function, as currently implemented, is intended to work well
+                with strings that are in the English language only. Strings in other
+                languages may not produce reliable results.
+
+              o This function is not guaranteed to provide consistent results with
+                strings that use multibyte character sets, including utf-8.
+
+             SELECT FIRST_NAME , SOUNDEX(FIRST_NAME) FROM EMPLOYEES;
+             SELECT SOUNDEX('here');
+             SELECT SOUNDEX('hear');
+             SELECT SOUNDEX('hair');
+ 
+
+         14. REPLACE FUNCTION
+
+         15. STRCMP
+
+             Syntax:
+               STRCMP(expr1,expr2)
+
+               STRCMP() returns 0 if the strings are the same, 
+                               -1 if the first argument is smaller than the second according to the current sort order, and 
+                             NULL if either argument is NULL. 
+                                1 if the first argument is greater than the second according to the current sort order
+
+               SELECT STRCMP('A','A'); -> 1
+               SELECT STRCMP('A','B'); -> -1
+               SELECT STRCMP('B','A'); -> 1
+               SELECT STRCMP('B',NULL); -> NULL
+
+
+         16. FORMAT
+             Formats the number X to a format like '#,###,###.##', rounded to D
+decimal places, and returns the result as a string. If D is 0, the
+result has no decimal point or fractional part. If X or D is NULL, the
+function returns NULL.
+
+The optional third parameter enables a locale to be specified to be
+used for the result number's decimal point, thousands separator, and
+grouping between separators. Permissible locale values are the same as
+the legal values for the lc_time_names system variable (see
+https://dev.mysql.com/doc/refman/8.0/en/locale-support.html). If the
+locale is NULL or not specified, the default locale is 'en_US'.
+
+URL: https://dev.mysql.com/doc/refman/8.0/en/string-functions.html
+
+Examples:
+mysql> SELECT FORMAT(12332.123456, 4);
+        -> '12,332.1235'
+mysql> SELECT FORMAT(12332.1,4);
+        -> '12,332.1000'
+mysql> SELECT FORMAT(12332.2,0);
+        -> '12,332'
+mysql> SELECT FORMAT(12332.2,2,'de_DE');
+        -> '12.332,20'
+       
+         17. INSTR
+             Returns the position of the first occurrence of substring substr in
+             string str. 
+             This is the same as the two-argument form of LOCATE(),except that the order of the arguments is reversed.
+
+             SELECT INSTR('WELCOME TO KENYA','TO');
+
+
+         18. REPEAT FUNCTION
+   
+             SELECT REPEAT('*',10);
+   
+  
+   
+ 
+  
+ 
+   ----------------------
+   DATE & TIME FUNCTIONS :
+   ----------------------
+
+   - In MySQL the default data format is YYYY-MM-DD  hh : mm :ss
+   
+   - Functions
+     
+     1.NOW()  : Dispalys current dat3 & time
+                SELECT NOW() ;
+
+     2.SYSDATE() :Dispalys current Date & Time
+                  SELECT SYSDATE() ;
+
+     3. SELECT NOW(), SLEEP(10),SYSDATE() ;
+
+         NOW() -> Dispaly the date and time when quesry started excuting
+         SYSDATE() -> Displays the latest date & time. 
+
+     4. YEAR
+        - Returns the year for date, in the range 1000 to 9999, 
+        - or 0 for the "zero" date. 
+        - Returns NULL if date is NULL.
+
+        - SELECT YEAR(NOW()) ;
+ 
+        - Find Year of hiring of each employee.
+          Select YEAR(HIRE_DATE) FROM EMPLOYEES;
+          
+     5. MONTH
+        - Returns the month for date, in the range 1 to 12 for January to
+          December, 
+        - 0 for dates such as '0000-00-00' or '2008-00-00' that have
+          a zero month part. 
+        - Returns NULL if date is NULL.
+
+        - Select YEAR(HIRE_DATE),MONTH(HIRE_DATE) FROM EMPLOYEES;
+
+        - SELECT MONTH('2008-02-03');
+
+     6. MONTHNAME 
+
+     7. DAY / DAYOFMONTH
+        - DAY() is a synonym for DAYOFMONTH().
+        - Returns the day of the month for date, in the range 1 to 31, 
+        - 0 for dates such as '0000-00-00' or '2008-00-00' that have a zero day part.
+        - Returns NULL if date is NULL.
+        - Select YEAR(HIRE_DATE),MONTH(HIRE_DATE),DAY(HIRE_DATE) FROM EMPLOYEES;
+
+     8. DAYNAME
+
+        Select YEAR(HIRE_DATE),MONTH(HIRE_DATE),MONTHNAME(HIRE_DATE),DAY(HIRE_DATE),DAYOFMONTH        (HIRE_DATE),DAYNAME(HIRE_DATE) FROM EMPLOYEES;
+
+        WAQ to List all employees who have hired in wednessday.
+
+        SELECT * FROM EMPLOYEES WHERE DAYNAME(HIRE_DATE) like 'Wednesday';
+
+     9. HOUR ,MINUTE ,SECOND
+        
+        SELECT NOW(),HOUR(NOW()),MINUTE(NOW()),SECOND(NOW());
+
+     10. CURDATE , CURTIME ,CURRENT_DATE , CURRENT_TIME , CURRENT_TIMESTAMP
+
+         SELECT CURDATE();
+         SELECT CURTIME();
+         SELECT CURRENT_TIMESTAMP();
+
+     11. WEEK YEARWEEK
+
+
+        - This function returns the week number for date. 
+        - The two-argument form of WEEK() enables you to specify whether the week starts on Sunday or
+          Monday and whether the return value should be in the range from 0 to 53
+          or from 1 to 53. 
+
+        - If the mode argument is omitted, the value of the default_week_format system variable is 
+          used.
+
+        -  SELECT WEEK('2023-01-01');
+
+           SELECT WEEK('2023-01-01',0);
+           
+           SELECT WEEK('2023-01-01',1);
+
+ 
+         - WAQ to list all emplyees who have been hired in the fourth week of that year.
+
+           SELECT * FROM EMPLOYEES WHERE WEEK(HIRE_DATE) = 25;
+
+
+      12.WEEKDAY / WEEKOFYEAR
+
+        - Returns the weekday index for date (0 = Monday, 1 = Tuesday, ... 6 =
+          Sunday). 
+
+        - Returns NULL if date is NULL. 
+
+        - SELECT WEEKDAY('2008-02-03 22:23:00');
+          SELECT WEEKDAY('2023-10-23') ;
+          SELECT WEEKDAY(NOW()) ;
+
+        - WAQ to select employees who have been hired in Monday.
+
+          SELECT * FROM EMPLOYEES WHERE WEEKDAY(HIRE_DATE)=0
+
+       13.YEARWEEK : Year with Week Number
+
+          - Syntax:
+                   YEARWEEK(date), YEARWEEK(date,mode)
+
+          - Returns year and week for a date. The year in the result may be
+            different from the year in the date argument for the first and the last
+            week of the year. 
+
+          - Returns NULL if date is NULL.
+
+          - The mode argument works exactly like the mode argument to WEEK(). 
+
+          - For the single-argument syntax, a mode value of 0 is used. Unlike WEEK(),
+  
+          - the value of default_week_format does not influence YEARWEEK().  
+
+
+       14. MICROSECOND
+
+        mysql> SELECT MICROSECOND('12:00:00.123456');
+        -> 123456
+        mysql> SELECT MICROSECOND('2019-12-31 23:59:59.000010');
+        -> 10
+
+       15. ADDDATE / DATE_ADD / DATE_SUB /SUBDATE
+ 
+            - Syntax:
+             ADDDATE(date,INTERVAL expr unit), ADDDATE(date,days)
+             DATE_ADD(date,INTERVAL expr unit), 
+            -These functions perform date arithmetic. 
+            - The date argument specifies the starting date or datetime value. 
+            - expr is an expression specifying the interval value to be added or subtracted from the               starting date.
+            - expr is evaluated as a string; it may start with a - for negative intervals. 
+            - unit is a keyword indicating the units in which the expression should be interpreted.
+
+            - When invoked with the INTERVAL form of the second argument, 
+             ADDDATE() is a synonym for DATE_ADD(). 
+            -  UNITS
+              ---------
+                YEAR
+                MONTH
+                DAY
+                HOUR
+                MINUTE
+                SECOND
+                WEEK
+                MINUTE_SECOND
+                
+
+            - The related function SUBDATE() is a synonym for DATE_SUB(). 
+            
+            For information on the INTERVAL unit argument,
+            
+           
+           ---------
+ 
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 1 DAY);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 5 DAY);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 1 YEAR);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 1 MONTH);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 6 HOUR);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 40 MINUTE);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 60 SECOND);
+           - SELECT NOW(),ADDDATE(NOW(),INTERVAL 1 WEEK);
+           - SELECT NOW(),DATE_ADD(NOW(), INTERVAL '1:1' MINUTE_SECOND);
+           - SELECT NOW(),DATE_ADD(NOW(),INTERVAL '1 1:1:1' DAY_SECOND);
+   
+
+       16. DATEDIFF
+
+           - Syntax:
+                    DATEDIFF(expr1,expr2)
+
+           - DATEDIFF() returns expr1 ? expr2 expressed as a value in days from
+             one date to the other. 
+           - expr1 and expr2 are date or date-and-time expressions. 
+           - Only the date parts of the values are used in the calculation.
+
+           - WAQ to find experience of each employees in Years
+ 
+             SELECT EMPLOYEE_ID ,FIRST_NAME,CONCAT(ROUND((DATEDIFF(NOW(),HIRE_DATE)/365)),' YEARS') AS              EXPERIENCE FROM EMPLOYEES;
+
+
+        17. DAYOFWEEK
+            
+           - Syntax: DAYOFWEEK(date)
+           - Returns the weekday index for date (1 = Sunday, 2 = Monday, ..., 7 =Saturday). 
+           - These index values correspond to the ODBC standard. Returns
+           - NULL if date is NULL.
+           - SELECT NOW(),DAYOFWEEK(NOW());
+
+        18.DAYOFYEAR
+           - Syntax:DAYOFYEAR(date)
+           - Returns the day of the year for date, in the range 1 to 366. 
+           - Returns NULL if date is NULL. 
+           
+           - SELECT NOW(),DAYOFYEAR(NOW()) ;
+  
+        19.DATE_FORMAT
+           - Syntax: DATE_FORMAT(date,format) 
+ 
+           - Formats the date value according to the format string. 
+
+           - If either argument is NULL, the function returns NULL.
+   
+           - EXAMPLE :
+            
+             https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_get-format
+
+           - Formats
+             https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format
+
+           - 
+   
+         20.
+             EXTRACT
+             FROM_DAYS
+             FROM_UNIXTIME
+             GET_FORMAT
+             LAST_DAY
+             LOCALTIME
+             LOCALTIMESTAMP
+             MAKEDATE
+             MAKETIME
+             PERIOD_ADD
+             PERIOD_DIFF
+             QUARTER
+             SEC_TO_TIME
+             STR_TO_DATE
+             SUBTIME
+             TIME FUNCTION
+             TIMESTAMPDIFF
+             TIME_FORMAT
+             TO_DAYS
+             TO_SECONDS
+   
+   
+      ------------------
+       NUMERIC FUNCTIONS :
+      ------------------   
+
+        %
+   	*
+   	+
+  	- BINARY
+   	- UNARY
+        /
+        ABS
+        
+        CEIL/CEILING /  TRUNCATE /ROUND /FLOOR
+        
+        CONV
+        DIV
+        EXP
+        FLOOR
+        MOD
+        PI
+        POW / POWER
+        RAND
+        
+        SIGN
+        SQRT
+       
+  
+        SELECT 13%2 ;
+        SELECT 13 MOD 2 ;
+        SELECT ABS(-90);
+        SELECT 45/5;
+        SELECT 45 DIV 5;
+        SELECT PI();
+        SELECT POW(2,3);
+        SELECT POWER(2,3);
+        SELECT RAND();
+        SELECT SIGN(-4);
+        SELECT SIGN(4);
+        SELECT SIGN(0);
+        SELECT SIGN(+45);
+        SELECT SQRT(2);
+        SELECT 45.27 , ROUND(45.27) , CEIL(45.27),TRUNCATE(45.27,1),FLOOR(45.27);
+        SELECT 45.67 , ROUND(45.67) , CEIL(45.67),TRUNCATE(45.67,1),FLOOR(45.67);
+ 
+  
+
+
+  
+
+
+
+
+
+
+
+
+     
