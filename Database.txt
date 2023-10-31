@@ -4,7 +4,50 @@ Database
 - CUI(MySQLCommandLineClient) and GUI(Workbench)
 - How to create db
 How to work on DB
+
+Command to running a script file: >source <path to script file>
+Command to give current DB which you are working : select database();
+
 - DDL: Create, Drop, Alter
+--------
+1.CREATE
+--------
+Option1
+--------
+create table table_name(
+   column_name datatype,
+   column_name datatype,
+   ...
+);
+Option2
+-------
+create table table_name as select * from table_name;  --> create table emp1 as select * from emp1;  => emp1 will be created with same sturcture and data as emp table.
+
+-----------
+2. ALTER
+------------
+- Alter object strycture.
+   Alter table emp add column_name datatype;
+   Alter table emp add (column_name datatype, column_name datatype, ...);
+- You can also; modify--> size of datatype: Alter table emp modify enmae varchar(new-size);
+                drop --> a column: Alter table emp drop eno;
+                rename
+--------------
+3. Truncate
+--------------
+-Removes all data from table. Only structire remains.
+   > truncate table table-name;
+- Rollback not possible.
+- Where clause cannot be used.
+- Removes all data at one go.
+----------------
+4. RENAME
+----------------
+- Renaming:
+  => tables: > rename table emp to emp1
+  => columns: > alter table rename column ename to name;
+  => constraints
+-
     +. How to create a DB
 	+. DataTypes.
 	+. cONSTRAINTS.
@@ -15,6 +58,23 @@ How to work on DB
 		-> Renaming an Existing column
 		
 -DML: insert, Update, Delete
+--------------
+1. INSERT
+--------------
+- Adding new data.
+
+--------------
+2. UPDATE
+--------------
+- Modify existing data.
+--------------
+3. DELETE
+--------------
+- remove data from table.
+- Rollback possible.
+- Where clause can be used.
+- We can remoeve all||single||multiple records as per our wish.
+
 -DQL: (Data Query Language) : Select.
     +. Select
 	+. Select distinct.
