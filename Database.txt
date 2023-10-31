@@ -290,7 +290,7 @@ mysql> SELECT COALESCE(NULL,NULL,NULL);
         -> NULL
 
 ---------
-JOINS
+JOINS ---> https://techcsm-my.sharepoint.com/:v:/g/personal/bibhuranjan_m_csm_tech/Eby_69jBWkZIsvnoyXAOUTcBbe90HOqXGT6YHraZww7hEA
 ---------
 [16:37] Bibhuranjan Mohanty
 SELECT EMPLOYEE_ID ,FIRST_NAME ,DEPARTMENT_ID FROM EMPLOYEES;
@@ -362,3 +362,55 @@ SELECT  FIRST_NAME,LAST_NAME , JOB_TITLE,DEPARTMENT_NAME FROM EMPLOYEES INNER JO
 26. Write a SQL query to find the department name, department ID, and number of employees in each department.
  
 27. Write a SQL query to find out the full name (first and last name) of the employee with an ID and the name of the country where he/she is currently employed.
+
+
+
+Write a query to find the name (first_name, last_name), and salary of the employees whose salary is greater than the average salary.
+Write a query to find the name (first_name, last_name) of the employees who have a manager and worked in a USA based department.
+[17:01] Bibhuranjan Mohanty
+1.Write a query to find the name (first_name, last_name) and the salary of the employees who have a higher salary than the employee whose last_name='Bull' .
+ 
+SELECT FIRST_NAME, LAST_NAME, SALARY 
+
+FROM employees 
+
+WHERE SALARY > 
+
+(SELECT salary FROM employees WHERE last_name = 'Bull');
+ 
+ 
+2.Write a query to find the name (first_name, last_name) of all employees who works in the IT department.
+ 
+SELECT first_name, last_name 
+
+FROM employees 
+
+WHERE department_id 
+
+IN (SELECT department_id FROM departments WHERE department_name='IT');
+ 
+3.Write a query to find the name (first_name, last_name) of the employees who have a manager and worked in a USA based department.
+ 
+SELECT first_name, last_name FROM employees 
+
+WHERE manager_id in (select employee_id 
+
+FROM employees WHERE department_id 
+
+IN (SELECT department_id FROM departments WHERE location_id 
+
+IN (select location_id from locations where country_id='US')));
+ 
+4. Write a query to find the name (first_name, last_name) of the employees who are managers.
+ 
+SELECT first_name, last_name 
+
+FROM employees 
+
+WHERE (employee_id IN (SELECT manager_id FROM employees));
+ 
+5. Write a query to find the name (first_name, last_name), and salary of the employees whose salary is greater than the average salary.
+ 
+SELECT first_name, last_name, salary FROM employees 
+
+WHERE salary > (SELECT AVG(salary) FROM employees);
