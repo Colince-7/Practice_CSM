@@ -99,12 +99,29 @@ create table table_name as select * from table_name;  --> create table emp1 as s
 - You can break your query into multi-line, you will see an arrow symbol.
 - To come out of the multi-line query if you want to cancel; just use: \c; or Ctrl +c 
 
-   WHERE clause
-   -------------
+-SQL clause: Mandatory clauses && Optional clauses
+-Mandatory clauses ex's: All SQL Commands i.e., SElECT, INSERT, ...etc.; FROM, INTO, ...
+-Optional clasues ex's WHERE, GROUP BY, HAVING, ORDER BY
+
+-------------------
+  1. WHERE clause - restricting rows
+-------------------
 - Acting as the condition to filter our relevant data.
+- Has the highest priority over the other optional clauses: will hence be processed first after the mandatory clauses.
 - Operators to use alongside where clause:
 - If you type;  HELP FUNCTIONS you will be able to see several types of opreators.
- 	
+
+-------------------
+  2. GROUP BY clause - Forming groups
+-------------------
+
+-------------------
+  3. HAVING clause - restricting groups
+-------------------
+
+-------------------
+  4. ORDER BY clause - sorting
+-------------------
 
 Operators
 -----------
