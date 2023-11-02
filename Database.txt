@@ -24,12 +24,15 @@ Option2
 create table table_name as select * from table_name;  --> create table emp1 as select * from emp1;  => emp1 will be created with same sturcture and data as emp table.
 
 -----------
-2. ALTER
+2. ALTER  - add, modify, drop, rename,...etc
 ------------
 - Alter object strycture.
    Alter table emp add column_name datatype;
    Alter table emp add (column_name datatype, column_name datatype, ...);
+   alter table emp add check(dept_no in (10,20,30));  // adding check constraint.
 - You can also; modify--> size of datatype: Alter table emp modify enmae varchar(new-size);
+                      --> constraint: alter table emp modify eno int not null;
+                      -->
                 drop --> a column: Alter table emp drop eno;
                 rename
 --------------
@@ -62,11 +65,15 @@ create table table_name as select * from table_name;  --> create table emp1 as s
 1. INSERT
 --------------
 - Adding new data.
+insert into table_name values(101,'Colince', 2000) --> order will be followed as in table.
+insert into emp (col1, col2, ...) values(col1_value, col2_value, ...);
 
 --------------
 2. UPDATE
 --------------
 - Modify existing data.
+ update table_name set col_name=<value>,col_name=<value> where <condition>;
+
 --------------
 3. DELETE
 --------------
@@ -74,6 +81,8 @@ create table table_name as select * from table_name;  --> create table emp1 as s
 - Rollback possible.
 - Where clause can be used.
 - We can remoeve all||single||multiple records as per our wish.
+delete from table_name; --> Deletes all records are retains the table structure.
+delete from emp where <condition>; --> Delete particular records.
 
 -DQL: (Data Query Language) : Select.
     +. Select
@@ -114,7 +123,11 @@ create table table_name as select * from table_name;  --> create table emp1 as s
 -------------------
   2. GROUP BY clause - Forming groups
 -------------------
+- Evaluated after where clause if it is existed.
+- 2nd priority in optional clauses.
+-Often used with aggregate functions.
 
+ select count(employee_id) as employee_Count,department_id from employees group by department_id; //number of employees in each dept.
 -------------------
   3. HAVING clause - restricting groups
 -------------------
@@ -123,6 +136,32 @@ create table table_name as select * from table_name;  --> create table emp1 as s
   4. ORDER BY clause - sorting
 -------------------
 
+- Aggregate functions
+--------------------
+-------------------
+  1. COUNT() - returns the number of rows that matches a specified criterion||condition.
+-------------------
+- SELECT COUNT(column_name) FROM table_name WHERE condition;
+-------------------
+  2. MAX() - returns the largest  value of the selected column
+-------------------
+- select max(salary) as max_salary from employees;
+
+-------------------
+  3. MIN() -returns the smallest value of the selected column
+-------------------
+- select min(salary) as min_salary from employees;
+
+-------------------
+  4. AVG() - returns the average value of a numeric column.
+-------------------
+
+
+-------------------
+  4. SUM() 
+-------------------
+
+
 Operators
 -----------
 - For a specific type of operator; help Comparison Operators
@@ -130,6 +169,36 @@ Operators
     2. OR
     3.
 - ...etc
+
+
+-CONSTRAINTS  -- Restriction based on business requirements.
+--------------
+  1. Domain Integrity constrints:  Defined as part of column definition. Ex; Not null, check, Default 
+-Can be defined while creating a table as part of column definition or when modifying a table.
+Syntax: - alter table set eno not null;
+        - CREATE TABLE Persons (ID int NOT NULL, LastName varchar(255) NOT NULL,);
+
+-------------------
+  1.1. default - Sets a default value for a column if no value is specified
+-------------------
+- has highest priority and therefore should come first.
+   => alter table emp modify dept_no int default 10;
+-------------------
+  1.2. Not null - Ensures that a column cannot have a NULL value
+-------------------
+- 2nd highest priority
+-
+-------------------
+  1.3. check - Ensures that the values in a column satisfies a specific condition
+-------------------
+- used to limit the value range that can be placed in a column.
+alter table emp add check(dept_no in (10,20,30));
+
+
+  2. Entity||Object integrity Constrints. : Defined at table level . Ex: default, PK
+----------------------------------
+  3.
+
 
 - Counting Rows:
 ----------------
