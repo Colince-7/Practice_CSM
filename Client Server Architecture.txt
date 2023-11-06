@@ -1,0 +1,81 @@
+Client Server Architecture
+=============================
+Q.With respect to web applications, what exactly is the C-S architecture required?
+See below image and explanations for clarity:
+
+Client - Browser
+Container
+----------
+In the differences between web applications and distributed applications, we learn't that web applications are executed by servers-Web servers||Application Servers-in general.
+Inside the Server, who is taking responsibility of executing the web application?
+The answer is: Containers.
+It is inside this Container that our web application is deployed.
+Inside the web application; web resources are existed: these maybe;
+  -Servlet components
+  -JSPs
+  -EJB components
+  -anything. Some Server side components we can say.
+These resources are what is going to be executed at server machine.
+
+Internet
+---------
+Between client and server we have the internet||network.
+Even though internet||network is available, we require protocol for communication- to transfer data from one machine to another machine.
+
+Like this from the briefs above on C-S architecture; 3 main components||parts we have:
+  - Client
+  - Protocal.
+  - Server.
+
+Client
+-------
+Client-Not a computer.
+Client- Is a Browser and strictly speaking; Browser is not even the real Client. haha
+A tab inside the browser is what we refer to as the client.
+Q. If you open for example 3||n tabs on a browser on a computer; i.e;
+ - www.facebook.com
+ - www.gmail.com
+ - www.get_tt_right.com
+ - ...etc.
+You will notice that, we are using mutiple tabs on a single browser which is available on a single computer.
+From these 3 tabs, we are submitting request to 3 servers. Could be at a single time or one after another; whatever it maybe.
+The 3 servers here are:
+  - facebook server.
+  - gmail server.
+  - get_tt_right server.
+  - ..etc
+
+Respective servers will take the respective request, process that request and generate some response.
+Q. All the 3 responses coming to single client or multiple clients?
+Ans.Simple!, 3 different clients. Hence, each and every tab on a browser is the client.
+
+Q. Role of Client in C-S application?
+Ans. - Sending request to server.
+     - Recieving response from server.
+
+Q. How is a tab in a browser-Client- able to send request to the server?
+Ans. By providing a String specification on client address bar.
+
+- This String specification can be used to submit request to the server.
+- This String specification is what we refer to as URI-Uniform Resource Identifier.
+- Two types of URIs are available:
+    -URN:
+    -URL:
+Q. What is the difference between URI, URN and URL? 
+Ans. - At Server side, we are going to write Servelets or not? Yes!! we are...
+     - If you want to access that servlet from client; then that servlet requires some identity for sure. Some identity it has to have.
+- Two types of identities are availble for the Server side component.
+   => Logical name
+   => Locator/URL Pattern/ Alias Name
+- URI: A string specification provided at client address bar, it can be used to refer to a particular server side resource from client.
+- URN: A string specification provided at cleint address bar, it can be used to refer to a particular server side resource through its logical name.
+Note: In case of servlets, logical name is a name which we are specifying along with <servlet-name> tag in web.xml
+- URL: A string specification provided at client address bar, it can be used to refer to aparticular resource at server machine through its Locator or  Url pattern or alias name.
+Note: In case of servlets, locator is a name which is specified along with <url-pattern> tag in web.xml file.
+
+Note: Almost all the servers are supporting URL notation only, no server is supporting URN notation.
+
+URL Syntax:
+------------
+
+
