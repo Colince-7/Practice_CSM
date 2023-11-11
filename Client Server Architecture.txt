@@ -78,4 +78,48 @@ Note: Almost all the servers are supporting URL notation only, no server is supp
 URL Syntax:
 ------------
 
+Protocol
+----------------
+
+In web applications, we need a protocol which must be:
+1. Connectionless protocol.
+  - Should not have any physical||wired connection.
+  - The connection should be logical||wireless.
+Reason: We don't know where server is located or where our clients are located.
+
+2. Stateless protocol
+  - Should only remember current client requet data only and not previous client request data. 
+
+Reason: If it tries to remember previous client request data, protocol may loose its memory size. Whenever the data is exceeded; present request data may not be possible to remember, hence it may not be able to transfer present request data from client to server.
+
+3. Compatible protocol with hypertext data.
+  - Generally, in web applications;request data is transferred in the form of Hypertext data-HTML. In some situations also, response data is comming the form of HTML. This is in general.
+Thus the compatible protocol for our HTML data is; HTTP.
+
+In a nut-shell, HTTP protocol is having all the above features.
+
+Q. How is HTTP protocol able to manage its stateless nature?
+----------------------------------------------------------------
+Ans:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
