@@ -102,15 +102,184 @@ Q. How is HTTP protocol able to manage its stateless nature?
 ----------------------------------------------------------------
 Ans:
 
+- We will use an image for clarity.
+- We have Client and Server. 
+- Between Client and Server we have a protocol.
+- When we submit request from client to server, protocol will carry that and deliver to the destination. Steps:
++. Protocol takes the request.
++. Establish a virtual socket connection between client and server as per the URL what we specified in the Client-Browser tab-that is a per the Server machine Ip address and as per the port number to the server process; automatically a connection will be established between client and server.
++. Prepare a Request Format; inside this, two parts are available:
+    1. Header Part
+       - Manage request header's data.
+       - Request header's data is nothing but: Clients meta data
+    2. Body Part
++.
+
+===========================================================================
+
+- Inside Response format header part, a number of fields are available; the first field is: Status Line Field
+- In this SLF, server will provide one number: A 3 digit number it will provide.
+- This 3 digit number is representaing what is the status of the present request process. Like that request is processed successfully or not.
+- If successfully processed, then success related number will be submitted to the client.
+- If any error is available at server side, server side related error will be submitted to the client.
+- If arror is vailable with request,like; requets is not proper, then client side error-that response will be given to the respective client.
+- For example we submitted request to one resource at server side but the required service is not available and now we are re-directing our request to some other application. Like we are under re-direction. This information must be provided to the client.
+- To specify either of these statuses to the respective client; in the Response header part we are having a field: Status line Field->A 3 digit number it will provide.
+- Once the Response format arrives at client side; first; the Status Line Field will be checked by client.
+- The 3 digit number in SLF will be cross-checked and it will tell what is it's status. The status may be:
+  +. Success related.--> Means informational response we have recieved.
+    - Actual response data from the body part will be displayed.
+  +. Error related response.
+    - If this is coming, it will prepare an error message in it own way and proceed to displaying that error message on our browser.
+ +. Redirectional response. 
+   - Will get a new URL and like this second request will be submitted to the new URL.
+
+The 3 digit number provided in the SLF of Response format header part is what we refer to as the Status code.
+
+- For these status codes, we are not going to do anything; internaly server and protocol will manage that staus codes and protocol will submit that status related  data to the respective client which will be able to tell what to do on cros-checking tht status code that is available in the SLF of Response format header part.
+
+- HTTP Protocol has given support for status codes,what exactly are the status codes provided||supported by HTTP protocol?
+- They are given in categorization:
+1. 1XX----> 100 to 199 ---> Informational Satus codes.
+  - Normal information the will give.
+2. 2XX ---> 200 to 299 ---> Success related status codes.
+3. 3XX ---> 300 to 399 ---> Redirectional status codes.
+4. 4XX ---> 400 to 499 ---> Client side etrrors status codes.
+5. 5XX ---> 500 to 599 ---> Server side errors status codes.
+
+That was the minimum content you are required to know about protocol.
+Next, we are going to understand out the server part.
+
+Server
+-------
+It is a special software installed in server machine.
+It will perform the following actions in C-S appliactaions:
+- Takes reqest from Protocol.
+- Identifies the requested resource at server side application.
+- Executes the server side application's resource
+- Generates response to protocol.
+Example s of servers available in the market:
+- Tomcat
+- Weblogic
+- JBOSS
+- Wildfly
+- Glassfish.
+- ...
+
+Servers are divided into two types:
+- Web servers
+- Application Servers
+
+Q. What are the diffrences between Web Servers and Application Servers?
+-------------------------------------------------------------------------
+Ans:
+-----
+1. Web servers are able to provide environment to design and excute web applictations only.
+   Application servers are providing environment to design and excute both web applications and distributed applications.
+
+2. To prepare distributed applications, we need some middleware services. In general, these middleware services include:
+   +. JNDI --> Java Naming and Directory Interface.
+   +. JTA --> Java Transaction API.
+   +. JMS --> Java Messaging Service.
+   +. JCA --> Java connector Arcgitecture.
+   +. JAAS --> Java Authentication and Authorization Service.
+   +. ...etc
+All these middleware services are required to prepare distributed applications.
+These middleware services are provided by application servers by default and are not provided by web servers.
+
+In a nut-shell: Web servers are not providing middleware services like JNDI,JTA, JAAS, JMS, ...
+Application Servers are providing middleware services like JNDI, JTA, JAAS, JMS,... by default
 
 
+In the initial stages of Computer Science and in the initial stages of C-S architecture; web-servers main intention is: web applications.
+Web applications main intention is: static response. 2 to 3 pages are available; from one page to another page we want to navigate and for that particular reason only we are using web-servers.
+Application servers on the other hand are mainly for dynamic response.
+Later on, this requirement has changed: From web applications we are also expecting dynamic response and in distributed applications, along with web applications, some distributed environment also we are expecting.
 
 
+When I install server software on server machine: two modules are installed:
+1. Main Server
+2. Container
 
+Q. What is the difference between Main Server and Conatiner.
+------------------------------------------------------------
+Ans.
+----
+We are going to see an image below for clarity:
+- In the address bar at Client side, I provided the URL: http://localhost:8080/app1/res1
+- On clicking the enter button, request will come to protocol.
+- Protocol will establish a virtual socket connection between cleint and server based on ip address and port number information available in the URL.
+- Protocol will prepare Request Format.
+- It will carry the Request format to the Server Merchine.
+- At Server machine two components are available; Main Server and Container.
+- Main Server will take the responsibility to recieve the Request Format from protocol.
+- Main Server will go ahead and:
++. Check whether the incoming request is good or not.
++. If everything inside the incoming request is not proper and some issues are their in the request such that it is not in a proper format, main server will send some response to the client which says: Bad request.
++. If the request is proper: Good request, it will identify for which resource is this request coming for. i.e., 
+  1. Is this request coming for html resource
+  2. Is this request coming for a Servlet or JSP resource.
 
+- If the request is coming for a static resource i.e., html page, then it will take a copy of that resource and send that as a response to the respective client.
+- If request is coming for a resource that needs to be executed at server side i.e., a Servlet, then only, Main server will pass that request to Container.
+- You may have a question like, why is it that for executable resources such as Servlets, Main server is forwarding that request to the Container and not handling that by itself?
+Ans:
+----
+- Actaully Server side components are excecuted by folloeing lifecycle actions.
+- How to excecute servlets? By following lifecyle actions. Which lifecycle actions?
+- It's only Container that has knowledge of what lifecycle actions need to be followed while executing a server-side resource.
+- Main Server is not aware of the lifecyle actions that need to be followed while execeuting the serverside component.
+- So how to execute a server side component like; servlet is known by the Container only, not known by the Main server.
+- Main server will have knowledge that the incoming request is for a servlet resource, but, I don't know haow to execute that resource!, what will I do?
+- The obvious solution is to forward that request to the person-Container- who knows how to execute that Servlet.
 
+- In a nut-shell; Container will execute dynamic resources i.e., Servlets.
+  Main Server will copy static resources and give that as response to client of an incoming request is for the static resource.
+- Moreover, dynamic resources i.e., Servlets are executed by following Lifecycle actions. That lifecycle actions implementations are available with the Container only.
+ Lifecycle implementations are not available with Main Server.
 
+Servlet API is managed by Container only, it is not managed by Main server.
+- Once this incoming request for a dynamic resource i.e., Servlet is forwarded by the Main Server to the Container; Immediately, Container will recognize for which application the request is coming, this it will tell from the URL. i.e., app1
+- If app1 is available, Container will take the resource name/path whatever we are requesting and it will cross-check if that is available inside app1.i.e., res1
+- If the resource name/path is available, Container will go ahead and execute that resource by following lifecycle actions since it knows how to execute that resource.
+- The lifecycle actions for executing a servlet include:
+   +. Servlet loading.
+   +. Servlet Instantiation.
+   +. Servlet Initialization.
+   +. Request processing.
+   +. Servlet de-instantiation.
+- By following these 5 steps, that Servlet will be executed.
+- By the execution of this servlet, automatically some response will be generated and whatever response is generated; Container will take that response and it will forward it to MainServer.
+- Main server is aware how to dispatch response to client through protocol.
+Note: Container responsibility is not to send response to client.
 
+Container responsibility:
+--------------------------
+- Recieve the incoming dynamic resource request from Main server.
+- Identify the dynamic resource. i.e., servlet.
+- Execute the resource.
+- Give response back to Main Server.
+
+Main Server responsibility:
+-----------------------------
+- Recieve incoming request for resource from protocol.
+- Check if the request is for static resource or dynamic resource.
+- If request is for static resource, it will take a copy of that resource and prepare a response format which it will hand over to protocol to carry it to the client.
+- If request is for dynamic resource, it will hand over the request to Container.
+- The response it will reciev from Container after Container is done with handling the request, it will forward that to protocol.
+
+Protocol responsibility:
+----------------------------
+- Take request from from Client.
+- Establish a virtual socket connection from client to server.
+- Prepare Request Format.
+-  Carry that request to Main Server.
+- On reciept of response from main server, it will prepare repsonse format.
+- Carry the response format back to client.
+
+Client responsibility:
+-----------------------
+- Recieve the response from protocol and based on the receipt response take the necessary action based on the status code in the SLF of response format header part.
 
 
 
