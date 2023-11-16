@@ -258,7 +258,7 @@ Container responsibility:
 - Recieve the incoming dynamic resource request from Main server.
 - Identify the dynamic resource. i.e., servlet.
 - Execute the resource.
-- Give response back to Main Server.
+- Give dynamic response back to Main Server.
 
 Main Server responsibility:
 -----------------------------
@@ -266,26 +266,72 @@ Main Server responsibility:
 - Check if the request is for static resource or dynamic resource.
 - If request is for static resource, it will take a copy of that resource and prepare a response format which it will hand over to protocol to carry it to the client.
 - If request is for dynamic resource, it will hand over the request to Container.
-- The response it will reciev from Container after Container is done with handling the request, it will forward that to protocol.
+- The response it will recieve from Container after Container is done with handling the request, it will forward that to protocol.
 
 Protocol responsibility:
 ----------------------------
 - Take request from from Client.
 - Establish a virtual socket connection from client to server.
 - Prepare Request Format.
--  Carry that request to Main Server.
+- Carry that request to Main Server.
 - On reciept of response from main server, it will prepare repsonse format.
 - Carry the response format back to client.
 
 Client responsibility:
 -----------------------
+- Submit request to protocol.
 - Recieve the response from protocol and based on the receipt response take the necessary action based on the status code in the SLF of response format header part.
 
+Example of Static related contents:
+- Main server will handle incoming request for static related contents.
++. HTML pages. 
++. Images.
++. ...etc
 
+Example of dynamic related contents:
++. EJB's  - Executed by EJB Container.
++. Servelets - Executed by Servelt Container.
++. JSP's - Executed by JSP container.
++. ...etc
 
+Classification of Containers.
+------------------------------
+ 1. As per technology used to prepare applications.
+    - There are 2 types of Containers:
+      1. Web Container.
+      =================
+- Able to execute only web resources. Examples of these web resources includes:
+ +. Servlets
+ +. JSPs
+- These Web Containers are classified into two types again:
+ +. Servlet Container
+ +. JSP Container.
+      2. EJB Container.
+      ==================
+- Able to execute EJB components only.
 
+When you are using JMS, JMS Container also you will find. In a nut-shell we can conclude that multiple containers are existed based on the technology you are using to prepare your application.
 
+2. As per the physical existnace of the Container with main server.
+- There are three types of Containers here:
+   1. Standalone Container.
+   ===========================
+- It is an Integration of Main server and Container as a single unit. They are existed as a single program.
+- Like same program is acting as Main server as well as Container.
+   2. In process Container.
+   ===========================
+-  Exists inside Main server. Nothing but, it is a part inside main server. As a sub-process inside main server it is running.
 
+   3. Out of Process Container.
+   =============================
+- Exists completely outside of the Main Server.
+
+Dependent on the Server software we are going to install on our machine, the type of Container it will come with may vary.
+
+That was it about Servers.
+
+Steps to prepare Web applications
+===================================
 
 
 
