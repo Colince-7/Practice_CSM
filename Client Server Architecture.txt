@@ -332,7 +332,152 @@ That was it about Servers.
 
 Steps to prepare Web applications
 ===================================
+1. Download and Install Tomcat Server.
+2. Prepare Web application directory structure at Server.
+3. Prepare deployment descriptor[web.xml file].
+4. Prepare Web resources like Servlets.
+5. Start Server and access web application.
 
+1. Download and Install Tomcat Server.
+------------------------------------------
+- To check if Tomcat is installed or not:
+Control Panel --> Programs --> Programs and features --> Serch for Tomcat
+
++. Tomcat download.
++. Download installer and install(Recommended).
+   - Do not download the zip file.
+   - If you already have Oracle installed in your machine, then by deafult it already taken port number 8080.
+   - So, you will have to change. i.e., to 1010
+   - Else, port clashing.
++. 
+2. Prepare Web application directory structure at Server.
+=============================================================
+- We are going to see an image for clarity.
+- Under folder structure we have one installation folder: C:\Program Files\Apache Software Foundation\Tomcat 10.1
+- Inside this folder, anumber of subfolders are existed:
+   +. bin folder
+    ==============
+   - Contains: 
+      .bat files
+      .exe files
+   - The purpose of these files is: To start server and to shutdown server.
+   - To start Tomcat server go to bin-> Tomcat10 application with the description; `Apache Commons Daemon Service Runner`  is available.
+   - Double click on this application to start. Some CUI window will open.
+   - To stop the server; just close CUI window.
+   - As an alternative we also have startup.bat and shutdown.bat to start and shutdown the server respectively.
+   +. conf folder
+    ==================
+   - Contains .xml files. Ex's:
+     1. tomcat-users.xml file
+        -----------------------
+      - To get and even modify some of the details partaining pwd and username.
+     2. server.xml file
+       ------------------------
+      - To get and even modify some of the details about our Tomcat server.
+     3. ...etc
+  +. lib folder.
+   =============
+ - Contains .jar files wich are required by Tomcat server. Ex's
+ - .jar files in the sense;
+     => servlet library related jar files.
+     => JSP library related jar files.
+     =>  ...etc
+- In future, when I prepare my Servlet class, and when I want to comiple it, then I need to set class path to these jar files.
+
++. logs folder.
+   =============
+Purpose:-
+- Server started, Server shutted down, Server application deployed, ...etc; these kind of statuses we are able to get in the form of logs.
+- Depending on our servers, .txt or .log files you will find them in this folder.
+- Status about our server software and server applications we are able to get in log files present in this folder.
+
++. temp folder.
+   =============
+- Able to manage any tempory files if they are exeisted.
+
++. work folder.
+   =============
+- Its purpose is: Maintaining internal processing of our server applications. 
+- For example I prepared a JSP page and am submitting request for this JSP page
+  => JSP page is excuting now.
+  => How is it running actually? 
+    . It is converted to Servlet-Servlet.java files and Servlet.class files- and Servlet will be executed internally.     
+    . By the execution of this servlet; some response we are getting now.
+- The point is; internally a Servlet is created-Servlet.java files and Servlet.class files.
+- Where are these Servlet.java and .class files going to be maintained? Inside this work folder.
+- Whatever the web application(s) we prepared with Tomcat server all these things are going to be maintained under work folder. Nothing but, a duplicate application will be created under work folder and there only this internal processing will be performed.
+- work folder purpose is for internal processing of our web application(s).
+
++. webapps folder.
+   ================
+-  We are going to prepare our applications in this folder, then only:
+   . Server will be able to recognize||idendify, deploy our application(s) into server space and finally it can be able to execute our application(s).
+Steps:
+-------
+=> Create your application folder. i.e., bankapp
+=> Under application folder a number of sub-folders we need to prepare: They generally include:
+   themes folder--> .css files,...etc
+   images folder --> .jpg, png files, ...etc
+   literature folder --> .doc
+       - If you want to prepare documentation about your application, the documentation you can maintain under literature folder.
+   src folder --> .java files go in this folder.
+   .html files, .html files  --> You could place them in a folder or just mainatain them as files singly inside application folder. This applies to all other file types we've discussed previously i.e., .css files, image files, literature files, etc.
+- Along with the files and folders we've seen above that are going into application folder, one more mandatory sub-folder of application folder we need to prepare, that is: WEB-INF
+This means nothing but under this folder our web application information we need to provide||maintain here.
+- Under WEB-INF folder, other sub-folders are available:
+   lib folder: has .jar files which are required for our web application.
+     For example, to prepare:
+     +. JDBC application--> ojdbc .jar file I need.
+     +. etc
+   web.xml file: Is our deployment descriptor.
+   - Our Servlet configurations, filters configurations, + a number of other resources configurations we are going to maintain them inside this folder by making use of xml tags.
+   classes folder: All the .class files are going to be maintained here. i.e., Servlet.class files, Filters.class files, ...etc
+   
+   
+
+
+- All these folders are coming with our Tomcat server during installation. We are not going to create any of the above folders.
+
+3. Prepare deployment descriptor[web.xml file].
+4. Prepare Web resources like Servlets.
+5. Start Server and access web application.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to make github as default editor for git bash instead of VI
+--------------------------------------------------------------------
+git config --global core.editor "code --wait"
 
 
 
