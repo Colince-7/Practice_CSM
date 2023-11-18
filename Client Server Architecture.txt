@@ -432,15 +432,208 @@ This means nothing but under this folder our web application information we need
    web.xml file: Is our deployment descriptor.
    - Our Servlet configurations, filters configurations, + a number of other resources configurations we are going to maintain them inside this folder by making use of xml tags.
    classes folder: All the .class files are going to be maintained here. i.e., Servlet.class files, Filters.class files, ...etc
-   
-   
-
-
+     
 - All these folders are coming with our Tomcat server during installation. We are not going to create any of the above folders.
+- Some of the folders inside the application folder we are going to create.
+In a nutshell:
+The total directory structure is divided into 2 parts:
+ +. Public Area/Client Area.
+- Area outside the WEB-INF folder and inside the application folder.
+- If we keep any resource under public area then we are able to access that resource from client by using the respective resource name directly.
+In general, we keep: html files under application folder. To access these html files we will directly use html file name.
+   http://locolhost:8080/loginapp/loginform.html
+ +. Private Area/Server Area.
+- Area inside the WEB-INF folder.
+- If we keep any resource under private area then we are unable to access that resource by using its name directly, we are able to access that resource through its alias name which we have declared in web.xml file.
+
+Under classes         mapping inside web.xml file
+   LoginServlet <---> /login
+http://locolhost:8080/loginapp/loginServlet.class --> Invalid way of accessing this resource.
+http://locolhost:8080/loginapp/login  --> Valid way to access this resource
+
 
 3. Prepare deployment descriptor[web.xml file].
+- Deployment descriptor is web.xml file.
+- It will provide description/metadata i.e., alias names, ...etc about our application which is required by the Container in order to identify and excute server side resources.
+- In web applications, what are the responsibilities of web.xml file:
+  +. Welcome files configurations
+  +. Display names configuration.
+  +. Servlet configurations
+  +. Filters configuration
+  +. Listeners configurations
+  +. Initialization parameters configurations
+  +. Context parameters configurations
+  +. Error pages configurations.
+  +. Session Time out Conf
+  +. Security conf
+  +. Taglib configurations.
+  +. ...etc
+
+Servlet configurations:
+-------------------------
+- Servlet classes will be kept in general in private area-inside WEB-INF folder under the sub-folder classes.
+- Since we are unable to access servlets by using there names directly from client, we have to define alias names for these servlets and by using that alias name only we are able to acces that servlets.
+- In web applications to define alisas names and provide mapping between alias names and servlet class names we have to use "Servlet Configuration" in web.xml file
+- To provide servlet configurations in web-xml file we have to use the following xml tags:
+   <web-app>
+    ---------
+    ---------
+    ---------
+   </web-ap>
+It is the root tag and it is representing one application data.
+Inside it a number of tags are available.
+
+  <servelet></servlet>
+  <servlet-mapping></servlet-mapping>
+
+Under <servelet></servlet> two tags we have to provide
+
+   <servlet-name>Logical name</servlet-name>
+   <servlet-class> Fully qualified name of the servlet class</servlet-class>
+
+Under <servlet-mapping></servlet-mapping>vtwo tags we have to provide
+
+   <servlet-name>Logical name</servlet-name>
+   <url-pattern>/patternName</url-pattern>
+This pattern name is also known as: alias name||locator.
+
+Ex:
+ <web-app>
+
+   <servlet>
+      <servlet-name>loginServlet</servlet-name>
+      <servlet-class>com.csm.servlets.LoginServlet</servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>logiServlet</servlet-name>
+      <url-pattern>/login</url-pattern>
+   </servlet-mapping>  
+
+ </web-app>
+
+ URL Patterns definitions:
+ ---------------------------
+- In web applications, we are generaly able to define URL patterns in 3 ways:
+  +. Exact match method
+  +. Directory match method.
+  +. Extension match method.
+
++. Exact match method
+-----------------------------
+We will define a url pattern in web.xml file, it must start with /
+Ex:
+<url-pattern>/abc/xyz</url-pattern>
+
+To access the respective Servlet class,url pattern provided at client address bar must be same as the URL patttern what we defined in web.xml file.Else invalid.
+
+http://locolhost:8080/app1/abc/xyz  --> Valid
+http://locolhost:8080/app1/abc  --> Invalid
+http://locolhost:8080/app1/xyz  --> Invalid
+http://locolhost:8080/app1/xyz/abc -->Invalid
+
+In web applications when we want to access servelets individually, there we will use exact match method to define URL pattern.
+
+ +. Directory match method.
+--------------------------------
+- We will define url pattern in web.xml file, it must start with / and it must be ended with *
+Ex:
+<url-pattern>/abc/*</url-pattern>
+
+ +. Extension Match Method:
+----------------------------
+We will define URL pattern in web.xml, it may start with * but it must be ended with a particular extension.
+EX:
+<url-pattern>*.do</url-pattern>
+Q. How will it be possible to access the respective server side resource now?
+Ans. 
+- If you want to access the respective Server side resource then the url pattern we specify at client address bar can start with anythin but it must end with the extension which we provided in url pattern specified in web.xml.
+Ex: http:locolhost:8080/app1/login.do --> Valid
+         locolhost:8080/app1/reg.do   --> Valid
+         locolhost:8080/app1/add.do   --> Valid
+         locolhost:8080/app1/search.do --> Valid
+         locolhost:8080/app1/update.abc --> Not Valid
+         locolhost:8080/app1/delete.do  --> Valid
+
+Generally, in MVC based web applications, a servlet will be used as Controller; the respnsibilty of the Controller thus is:
+ - Take all request from client and perform actions on the basis of the specified URL pattern.
+In this Context, we will use extension match method to define URL pattern for the Controller servlet.
+
+Example:
+-------
+- Some modules/actions/models I have: add, search, delete, ...etc => Present in business layer.
+- Controller I have
+- Some Views I also have i.e 
+  +.View to create or add a Student
+     http://locolhost:8080/app1/add.do
+  +.View to search for a Student
+     http://locolhost:8080/app1/search.do
+  +.View to delete a Student.
+     http://locolhost:8080/app1/delete.do
+- From the form/view, url pattern will come.
+- Url pattern for Controller is *.do
+- For the model layer components, they represent some action classes where some logic is available.
+- Clicking on the add button of addform.html, request will come to Controller component.
+- Container will take that URL pattern name: add.do
+- Container will proceed to comparing add.do and *.do, yes! they are the same.
+- Controller will remove the .do extention
+- Immediately Controller will invoke the add action.
+  action name and respective url pattern name must be the the same
+
+- Clicking on the search button of searchform.html, request will come to Controller component.
+- Container will take that URL pattern name: search.do
+- Container will proceed to comparing search.do and *.do, yes! they are the same.
+- Controller will remove the .do extention
+- Immediately Controller will invoke the search action.
+  action name and respective url pattern name must be the the same
+
+- Clicking on the delete button of searchform.html, request will come to Controller component.
+- Container will take that URL pattern name: delete.do
+- Container will proceed to comparing delete.do and *.do, yes! they are the same.
+- Controller will remove the .do extention
+- Immediately Controller will invoke the delete action.
+  action name and respective url pattern name must be the the same
+
+In MVC application, extention match method is used frequently.
+
+
 4. Prepare Web resources like Servlets.
+------------------------------------------
+- Servlet: It is a server side component managed by Container, by the execution servlet,container will generate dynamic response from server to client.
+- Servlet is a server side program, it must implement javax.servlet.Servlet interface either directly or indirectly.
+- To prepare Servlets, Servlet API has provided predefined library in the form of javax.servlet package and javax.servlet.http package.
+- Below is the directory structure of the predefine library provided to prepare Servlets.
+
+
+Q. What are the various approaches to prepare Servlets as per the predefine library provided by Servlet API?
+--------------------------------------------------------------------------------------------------------------
+Ans.  3 approaches are available.
+1. By implementing servlet Interface
+2. By extending GenericServlet abstract class.
+3. By Extending HttpServlet abstract class.
+
+1. By implementing servlet Interface
+---------------------------------------
+- public class MyServlet implements javax.servlet.Servlet{
+         //Impl all methods of Servlet interface
+   }
+
+2. By extending GenericServlet abstract class.
+-----------------------------------------------
+- public class MyServlet extends GenericServlet{
+        // impl for all service provided methods. 
+    }
+
+3. By Extending HttpServlet abstract class.
+-----------------------------------------------
+public class MyServlet extends HttpServlet{
+     // impl for service provided methods
+   }
+
+
 5. Start Server and access web application.
+-----------------------------------------------
+
 
 
 
