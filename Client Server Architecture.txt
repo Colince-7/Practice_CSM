@@ -600,6 +600,8 @@ In MVC application, extention match method is used frequently.
 4. Prepare Web resources like Servlets.
 ------------------------------------------
 - Servlet: It is a server side component managed by Container, by the execution servlet,container will generate dynamic response from server to client.
+  In general most people are thinking that; Servlets are generating dynamic response to the client; No! A Servlet is a program available at Server machine, that's it. Container has to execute that program then only it-Container- will response will be generated to the client
+
 - Servlet is a server side program, it must implement javax.servlet.Servlet interface either directly or indirectly.
 - To prepare Servlets, Servlet API has provided predefined library in the form of javax.servlet package and javax.servlet.http package.
 - Below is the directory structure of the predefine library provided to prepare Servlets.
@@ -621,14 +623,17 @@ Ans.  3 approaches are available.
 2. By extending GenericServlet abstract class.
 -----------------------------------------------
 - public class MyServlet extends GenericServlet{
-        // impl for all service provided methods. 
+        // implementation for all service provided methods. 
     }
+- Inside this GenericServlet, their is a method like service() Method.
+- In this service() method only we have to provide implementation part.
 
 3. By Extending HttpServlet abstract class.
 -----------------------------------------------
 public class MyServlet extends HttpServlet{
      // impl for service provided methods
    }
+- 
 
 
 5. Start Server and access web application.
