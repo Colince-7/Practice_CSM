@@ -646,6 +646,85 @@ public class MyServlet extends HttpServlet{
 
 
 
+Servlets Design
+--------------------
+- In 3 ways we are able to prepare servlets:
+1. By implementing Servlet interface
+2. By extending GenericServlet abstract class.
+3. By extending HttpServlet abstract class.
+
+1. By implementing Servlet interface
+---------------------------------------
+- How many methods are available inside; Servlet interface:
+ +. Overall 5 methods are available;
+   1. init() method
+     - Executed when Container is performing Servlet initialization.
+     - Servlet initialization is performed by Container not init method.
+     - Inside init method, we can write our logic that we need to be excuted when Container is performing servlet initialization.
+   2. service() method
+     - It is like main method in our Java application.
+     - Application logic we need to keep here.
+     - Executed while performing request processing by Container.
+   3. getServletConfig() method
+     - Used to return the generated ServletConfig object.
+   4. getServletInfo() method
+     - To return metadata about our Servlets.
+   5. destroy() method.
+     - Executed while perfoming Servlet de-instantiation.
+public class MyServlet implements Servlet
+{
+  // Implementaion for all methods of Servlet interface.
+}
+
+Servlet interface
+---------------------
+public interface Servlet{
+   public void init(ServletConfig config)throws ServletException;
+   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException;
+   public ServletConfig getServletConfig();
+   public String getServletInfo();
+   public void destroy();
+
+}
+ Of this methods, 3 methods are lifecyle methods:
+  - initi() method
+  - service() method
+  - destroy() method.
+
+The rest two methods are non-lifecycle methods.
+  - ServletConfig()
+  - getServletInfo()
+
+
+
+1. service() method.
+-------------------
+Skeleton
+-----------
+public void service(ServletReqiest req, ServletResponse res) throws ServletException, IOException
+  {
+
+
+  }
+
+- Whatever data that is coming from request, that is available in requestformat that will come into: ServletRequest parameter.
+- After processing inside service method, a response is coming
+
+1. Set Response Type to the response object.
+   res.setContentType("text/html")
+ Note: The default content type in servlets is "text/html" only.
+
+2. get PrintWriter object.
+   PrintWriter out = res.getWriter();
+
+3. Send response data to Response object.
+   out.println("<html>");
+   out.println("<body>");
+   out.println("Welcome To Servlets");
+   out.println("</body>");
+   out.println("</html>");
+
+Above are the 3 steps to prepare service method.
 
 
 
