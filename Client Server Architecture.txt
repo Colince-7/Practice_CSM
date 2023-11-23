@@ -655,50 +655,93 @@ Servlets Design
 
 1. By implementing Servlet interface
 ---------------------------------------
-- How many methods are available inside; Servlet interface:
+- How many methods are available inside; Servlet interface and what is the purpose of each and every method.
  +. Overall 5 methods are available;
    1. init() method
-     - Executed when Container is performing Servlet initialization.
+     - Executed when Container is performing Servlet initialization phase.
      - Servlet initialization is performed by Container not init method.
-     - Inside init method, we can write our logic that we need to be excuted when Container is performing servlet initialization.
+     - Inside init method, we can write our logic that we need to be excuted by Container as part of servlet initialization phase.
+Ex: I want to travell to Mt.View
+    I will go at the bus stage to wait for a bus
+    When bus is coming then only we will board it.
+    By you waiting at the bus stage is not the reason why a bus you will board is passing by to pick you.
+    If you we'rent present the bus would still pass.
+Container is available, inside Container 10's of thousand of lines are availble for implementing Servlet life cycle. 
+
+For Servlet loading - some 1k+ lines of code
+Servlet instantiation - some 1k+ lines of code
+Servlet initialization - some 1k+ lines of code
+...etc
+
+When request is coming to the Container, Container will start Servlet lifecycle actions
+As part of Servlet loading phase some actions/methods will be invoked
+As part of Servlet instantiation phase some actions/methods will be invoked
+As part of Servlet initialization phase some actions/methods will be invoked. i.e., init() method
+As part of Servlet request processing phase some actions/methods will be invokedy. i.e, service() method
+
+Like this, these methods() are called while performing Servlet lifecycle actions by the Container. Container is having a program to perform the lifecycle actions and as part of that, it will call the methods we are are discussing here.
+
+Like the methods we are discussing here are not the reason as to why Servlet lifecycle actions are executed. Relate that with the leimans example of bus I have just discussed above.
+
    2. service() method
-     - It is like main method in our Java application.
-     - Application logic we need to keep here.
+     - It is like main method in core Java program. Why are we providing main method in core Java applications? Ans. To provide our application logic. This method has to be recognized and executed by the JVM automatically.
+     - Application logic we need to keep here in the case of our Servlets just like main method. If we keep application logic here, when we submit request from client to server; server will come to service() method and will executed whatever logic is present here.
+ - Like this, service() method is like main() method in or core Java application.
      - Executed while performing request processing by Container.
+- How do we implement service() method; some few steps we will see later.
    3. getServletConfig() method
-     - Used to return the generated ServletConfig object.
+- We know that, container will call inti() method while performing Servlet initialization.
+- When Container is calling this init() method, it must create ServletConfig object.
+- Container must pass that ServletConfig object reference as a parameter to init() method.
+- ServletConfig object contains the configurationdetails of the Servlet. i.e.,
+   +. Logical name of the Servlet
+   +. Initialization parameters of the Servlet.
+   +. ...etc
+- Now, whatever the ServletConfig object which is created and passed inside init() method as a parameter by the Container; that object I want to get it.
+- To get this generated ServletConfig object, we have to use; getServletConfig() method.
+- Used to return the generated ServletConfig object.
    4. getServletInfo() method
-     - To return metadata about our Servlets.
+     - To return||get metadata||some description about our Servlet.
    5. destroy() method.
-     - Executed while perfoming Servlet de-instantiation.
+     - Executed as part of Servlet de-instantiation phase.
+- Remember: Their is implementation inside Container for de-instantiation
+- When Servlet de-instantiation is performed by the Container, then; automatically this destroy() method will be excuted.
+
 public class MyServlet implements Servlet
 {
-  // Implementaion for all methods of Servlet interface.
+  // Implementaion for all methods of Servlet interface with or without the requirement. Else you will get Compilation error.
 }
 
 Servlet interface
 ---------------------
 public interface Servlet{
-   public void init(ServletConfig config)throws ServletException;
-   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException;
-   public ServletConfig getServletConfig();
-   public String getServletInfo();
-   public void destroy();
+   public void init(ServletConfig config)throws ServletException;  // Executed a s part of the Servlet initialization phase. It is a lifecycle method.
+   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException; // Executed while performing the request processing phase of the Servlet lifecycle. It is a lifecycle phase.
+   public ServletConfig getServletConfig(); // Just a normal method to return||get ServletConfig object.
+   public String getServletInfo(); // Normal methos to return the metadata of the respective servlet.
+   public void destroy(); // It is a lifecycle method executed as part of the servlet de-instantiation phase.
 
 }
- Of this methods, 3 methods are lifecyle methods:
-  - initi() method
+- Those were the methods we need to write in order to prepare our Servlets in the case where our Servlet class implements Servlet interface.
+- All the methods above, are not doing any activities of Servlet life cycle. Container is having clear-cut implementation on Servlet life cycle and as part of the Servlet life cycle container will inly but invoke these methods i.e., init(), service(), destroy(), ...
+Ex:
+- Container is performing Servlet initialization and as part of this Servlet initialization, if you want to execute something as part of Servlet initialization phase, then Servlet has given an option for us;  provide init() method and inside this init() method we can keep some logic which is going to be excuted as part of the servlet initialization phase.
+
+ Of 5 methods available inside the Servlet interface, 3 methods are involved Servlet lifecyle.
+  - init() method
   - service() method
   - destroy() method.
 
 The rest two methods are non-lifecycle methods.
   - ServletConfig()
   - getServletInfo()
+They will not be involved in the lifecycle of the respective Servlet action.
 
 
 
 1. service() method.
 -------------------
+- We are going to provide our actual application logic here.
 Skeleton
 -----------
 public void service(ServletReqiest req, ServletResponse res) throws ServletException, IOException
