@@ -742,8 +742,16 @@ They will not be involved in the lifecycle of the respective Servlet action.
 1. service() method.
 -------------------
 - We are going to provide our actual application logic here.
-Skeleton
------------
+- Mandatory to implement this method.
+- In Container, Servlet lifecycle as per the request processing phase; service() method will be executed.
+- This is like main method in our core java program.
+- When you submit request from Client to Server, Container will come to our Servlet, execute service() method as part of the request processing phase. 
+- By the excution of service() method, then response will generated to the respective client.
+- How to implement service() method.
+- Below is the complete prototype of service() method.
+
+Skeleton||prototype
+--------------------
 public void service(ServletReqiest req, ServletResponse res) throws ServletException, IOException
   {
 
@@ -751,11 +759,28 @@ public void service(ServletReqiest req, ServletResponse res) throws ServletExcep
   }
 
 - Whatever data that is coming from request, that is available in requestformat that will come into: ServletRequest parameter.
-- After processing inside service method, a response is coming
+- ServletRequest object, rq , is able to provide the complete information about our request.
+- It is through this parameter that requestformat data will be injected into our service() method.
+- From this, ServletRequest object-rq- we are able to access the request data whatever is coming from client.
+- At the time of calling service() method both ServletRequest object and ServletResponse object are created.
+- In ServletRequest object, incoming request data is stored but at the time of calling service() method, ServletResponse object is an empty object.
+- When Container executes whatever logic is available inside service() method, dynamic response will be generated which will now go and get stored in ServletResponse object.
+- Container will take the dynamic response from ServletResponse object and dispatch that back to the client.
+- Developer job when it comes matters service() method is;
+   => Get some input data from ServletRequest object.
+   => Use that data in application logic||prapare application logic.
+   => Prepare some dynamic response
+   => Give that dynamic Response to ServletResponse object.
+- When we keep the dynamic response in ServletResponse object, Container is responsible to get the response from here and then submit that response data to the respective client.
+- How to dispatch response to the Client, Container and server will take care of that. This won't be our concern!
+- How to get data from ServletRequest object, we will get to know about this later.
+- How to keep some response in ServletResponse object, then we will follow the below steps;
 
 1. Set Response Type to the response object.
+- Means: which type of response we need to generate from this Servlet, that we have to set.
    res.setContentType("text/html")
- Note: The default content type in servlets is "text/html" only.
+- If you set the response type to text/html, means text||html kind of data will be stored in ResponseFormat header part.
+ Note: The default content type in Servlets is "text/html" only.
 
 2. get PrintWriter object.
    PrintWriter out = res.getWriter();
