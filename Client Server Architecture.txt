@@ -795,10 +795,65 @@ public void service(ServletReqiest req, ServletResponse res) throws ServletExcep
 Above are the 3 steps to prepare service method.
 
 
+Preparing first Servlet application.
+--------------------------------------
+Inside webapps folder; I need to prepare my Servlet applications as below:
 
+<web-app>
+  <servlet>
+     <servlet-name>WelcomeServlet</servlet-name>
+     <servlet-class>WelcomeServlet</servlet-class>
+  </servlet>
+    
+  <servlet-mapping>
+    <servlet-name>WelcomeServlet</servlet-name>
+    <url-pattern>/welcome</url-pattern>
+  </servlet-mapping>
+<web-app>
 
+import javax.servlet.*;
+import java.io.*;
 
+public class WelcomeServlet implements Servlet
+{
+// main() method should not be provided. As Container will take care of managing Servlet lifecycle
 
+//init() method
+   public void init(ServletConfig config) throws ServletException
+   {
+   }
+//service() method
+  public void service(ServletRequest, ServletResponse)throws ServletException, IOException
+   {
+     response.setContentType("text/html");
+     PrintWriter out = response.getWriter();
+
+     out.println("<html>");
+     out.println("<body>");
+     out.println("<h2>");
+     out.println("<font color='red'>");
+     out.println("<b>");
+     out.println("Welcome to get_tt_right.com");
+     out.println("</b><hr></font></h2></body></html>");
+   }
+// getServletConfig method
+  public ServletConfig getServletConfig()
+  {
+     return null;
+  }
+// getServletInfo method
+  public String getServletInfo()
+  {
+    return "";
+  }
+
+// destroy method
+  public void destroy()
+  {
+   
+  }
+  
+}
 
 
 
