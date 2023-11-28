@@ -622,7 +622,7 @@ Ans.  3 approaches are available.
 
 2. By extending GenericServlet abstract class.
 -----------------------------------------------
-- public class MyServlet extends GenericServlet{
+- public class MyServlet extends javax.servlet.GenericServlet{
         // implementation for all service provided methods. 
     }
 - Inside this GenericServlet, their is a method like service() Method.
@@ -633,227 +633,84 @@ Ans.  3 approaches are available.
 public class MyServlet extends HttpServlet{
      // impl for service provided methods
    }
-- 
-
 
 5. Start Server and access web application.
 -----------------------------------------------
 
 
+Activities Perfomerd by Container
+-------------------------------------
+Container will come to webapps folder.
+It will recognize all the applications.
+It will go ahead and deploy all these application onto the server.
+For each and every deployed object, Container will create a Servlet object which we can refer to as: ServletContext object.
+At the time of deploying of our web applications, container will search for web.xml file under WEB-INF folder.
+If available it will load this web.xml file, parse it and read data from this web.xml file.
+As part of this parsing phase, if any error is identified in web.xml file, server console will raise this parsing exceptions.
+If no mistakes are identified in the web.xml file, then the contents of this web.xml file will be stored in ServletContext object.
+Finally server is started and the status of our application will be: ready to execute. Nothing but our application is already deployed, ServletContext object is ready and web.xml file content is as well ready.
+Remaining thing is; waiting for request from client and trying to excute required application.
+On client machine Address bar is available, there we have to provide URL address
+Ex: http://lh:8080/app01/welcome
+welcome is the url||locator||alias name which we have provided.
+Request will come to protocol.
+Protocol will establish a virtual socket connection between Client and Server.
+Prepare Request Format-2 parts are available; Header Part and Body Part.
+Header Part-Manages meta-data about our client browser.
+Body Part - Manages request parameters data.
+Protocol will carry the total Request Format to Main Server.
+Main Server will check if that request is good or not.
+If not good, it will submit error response to the respective client.
+If request is good and is coming for:
+1. Static resource
+Main server will identify that static resource and it will submit a copy of it to the respective client.
+2. Dynamic resource.
+Main server will forward that request to Container.
+Container will take that application name; app01
+Next it will take that resource name; welcome. It will underatnd that this is the url || locator pattern for the a particular Servlet.
+To know for which Servlet this URL pattern belongs to, Container will go for web.xml file.
+In the web.xml file, whenever a mapping is existed between the url pattern and the respective Servlet class name, Container will go to classes folder and it will search if the respective Servlet.class file is existed.
+If it is not available, then Container will raise an Servlet exception like: Internal root: Class not found exception
+If it is available, then Container will execute the respective Servlet class by perfoming lifecycle actions.
+1. Servlet loading - Load the Specified Servlet class byte code to the memory.
+2. Servlet Instantiation- Container will creat an object for the loaded Servlet class.
+   Inside this Servlet class which we have implemented from Servlet interface; we have prepared 5 methods. init(), service(), getServletConfig(), getServletInfo() and destroy() method.
+Of these 5 methods, inside service() method we have provided our complete application logic.
+3. Servlet initialization - As part of this phase, init() method will be invoked.
+ To invoke this int() method, Container has to pass ServletConfig object as a parameter to this method.
+Container therefore has to first create ServletConfig object. This ServletConfig object has to be passed as parameter to init(sc) method.
+After this phase is complete, Container therefore has to create a thread to execute||invoke our service() method
+
+If Container wants to invoke service(req,res) method, to has to provide two  parameters: ServletRequest object reference and ServletResponse  object reference.
+Therefore, first, Container has to create ServletRequest and ServletResponse object, then by passing the references of these respective objects to service method, Container will execute service(req, res) method.
+
+ServletRequest object contains the total request data coming from client.
+Hence this data we can access and use it from service(req,res) method.
+ServletResponse object initially is empty at the time of calling service(req, res) method, but by the execution of this service method; some response will be generated and kept in ServletResponse object.
+
+Whenever Container generated thread reaches to any point of service method then automatically it will come to dead state, actually not dead state, haha; their is a concept like thread pooling, so; thread pooling is going on. This is not required now; in future I will discuss it.  
+Meanwhile understand it that way.
+Whenever Container generated thread is coming to the dead state; automatically Container will understand that; request processing process is completed. Then immediately Container has to dispatch the total response from ServletResponse object to respective client.
+When response is coming to main server; it knows how to dispatch that response to the client.
+Main server will take that response and give it to protocol.
+Protocol will prepare response format; inside this; header part and body part is existed.
+ Header part-Manage meta-data about our dynamic response.
+ Body part- provide actual dynamic response.
+When ResponseFormat is ready, protocol will carry it to the respective client which is able to get the total response from the response format.
+Client knows what to do when it recieves this all total response.
+When client interprates and understands what it has to do with the total response, protocol will go ahead and terminate the connection what it has established previously.
 
 
 
 
 
 
-Servlets Design
---------------------
-- In 3 ways we are able to prepare servlets:
-1. By implementing Servlet interface
-2. By extending GenericServlet abstract class.
-3. By extending HttpServlet abstract class.
-
-1. By implementing Servlet interface
----------------------------------------
-- How many methods are available inside; Servlet interface and what is the purpose of each and every method.
- +. Overall 5 methods are available;
-   1. init() method
-     - Executed when Container is performing Servlet initialization phase.
-     - Servlet initialization is performed by Container not init method.
-     - Inside init method, we can write our logic that we need to be excuted by Container as part of servlet initialization phase.
-Ex: I want to travell to Mt.View
-    I will go at the bus stage to wait for a bus
-    When bus is coming then only we will board it.
-    By you waiting at the bus stage is not the reason why a bus you will board is passing by to pick you.
-    If you we'rent present the bus would still pass.
-Container is available, inside Container 10's of thousand of lines are availble for implementing Servlet life cycle. 
-
-For Servlet loading - some 1k+ lines of code
-Servlet instantiation - some 1k+ lines of code
-Servlet initialization - some 1k+ lines of code
-...etc
-
-When request is coming to the Container, Container will start Servlet lifecycle actions
-As part of Servlet loading phase some actions/methods will be invoked
-As part of Servlet instantiation phase some actions/methods will be invoked
-As part of Servlet initialization phase some actions/methods will be invoked. i.e., init() method
-As part of Servlet request processing phase some actions/methods will be invokedy. i.e, service() method
-
-Like this, these methods() are called while performing Servlet lifecycle actions by the Container. Container is having a program to perform the lifecycle actions and as part of that, it will call the methods we are are discussing here.
-
-Like the methods we are discussing here are not the reason as to why Servlet lifecycle actions are executed. Relate that with the leimans example of bus I have just discussed above.
-
-   2. service() method
-     - It is like main method in core Java program. Why are we providing main method in core Java applications? Ans. To provide our application logic. This method has to be recognized and executed by the JVM automatically.
-     - Application logic we need to keep here in the case of our Servlets just like main method. If we keep application logic here, when we submit request from client to server; server will come to service() method and will executed whatever logic is present here.
- - Like this, service() method is like main() method in or core Java application.
-     - Executed while performing request processing by Container.
-- How do we implement service() method; some few steps we will see later.
-   3. getServletConfig() method
-- We know that, container will call inti() method while performing Servlet initialization.
-- When Container is calling this init() method, it must create ServletConfig object.
-- Container must pass that ServletConfig object reference as a parameter to init() method.
-- ServletConfig object contains the configurationdetails of the Servlet. i.e.,
-   +. Logical name of the Servlet
-   +. Initialization parameters of the Servlet.
-   +. ...etc
-- Now, whatever the ServletConfig object which is created and passed inside init() method as a parameter by the Container; that object I want to get it.
-- To get this generated ServletConfig object, we have to use; getServletConfig() method.
-- Used to return the generated ServletConfig object.
-   4. getServletInfo() method
-     - To return||get metadata||some description about our Servlet.
-   5. destroy() method.
-     - Executed as part of Servlet de-instantiation phase.
-- Remember: Their is implementation inside Container for de-instantiation
-- When Servlet de-instantiation is performed by the Container, then; automatically this destroy() method will be excuted.
-
-public class MyServlet implements Servlet
-{
-  // Implementaion for all methods of Servlet interface with or without the requirement. Else you will get Compilation error.
-}
-
-Servlet interface
----------------------
-public interface Servlet{
-   public void init(ServletConfig config)throws ServletException;  // Executed a s part of the Servlet initialization phase. It is a lifecycle method.
-   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException; // Executed while performing the request processing phase of the Servlet lifecycle. It is a lifecycle phase.
-   public ServletConfig getServletConfig(); // Just a normal method to return||get ServletConfig object.
-   public String getServletInfo(); // Normal methos to return the metadata of the respective servlet.
-   public void destroy(); // It is a lifecycle method executed as part of the servlet de-instantiation phase.
-
-}
-- Those were the methods we need to write in order to prepare our Servlets in the case where our Servlet class implements Servlet interface.
-- All the methods above, are not doing any activities of Servlet life cycle. Container is having clear-cut implementation on Servlet life cycle and as part of the Servlet life cycle container will inly but invoke these methods i.e., init(), service(), destroy(), ...
-Ex:
-- Container is performing Servlet initialization and as part of this Servlet initialization, if you want to execute something as part of Servlet initialization phase, then Servlet has given an option for us;  provide init() method and inside this init() method we can keep some logic which is going to be excuted as part of the servlet initialization phase.
-
- Of 5 methods available inside the Servlet interface, 3 methods are involved Servlet lifecyle.
-  - init() method
-  - service() method
-  - destroy() method.
-
-The rest two methods are non-lifecycle methods.
-  - ServletConfig()
-  - getServletInfo()
-They will not be involved in the lifecycle of the respective Servlet action.
 
 
 
-1. service() method.
--------------------
-- We are going to provide our actual application logic here.
-- Mandatory to implement this method.
-- In Container, Servlet lifecycle as per the request processing phase; service() method will be executed.
-- This is like main method in our core java program.
-- When you submit request from Client to Server, Container will come to our Servlet, execute service() method as part of the request processing phase. 
-- By the excution of service() method, then response will generated to the respective client.
-- How to implement service() method.
-- Below is the complete prototype of service() method.
-
-Skeleton||prototype
---------------------
-public void service(ServletReqiest req, ServletResponse res) throws ServletException, IOException
-  {
 
 
-  }
 
-- Whatever data that is coming from request, that is available in requestformat that will come into: ServletRequest parameter.
-- ServletRequest object, rq , is able to provide the complete information about our request.
-- It is through this parameter that requestformat data will be injected into our service() method.
-- From this, ServletRequest object-rq- we are able to access the request data whatever is coming from client.
-- At the time of calling service() method both ServletRequest object and ServletResponse object are created.
-- In ServletRequest object, incoming request data is stored but at the time of calling service() method, ServletResponse object is an empty object.
-- When Container executes whatever logic is available inside service() method, dynamic response will be generated which will now go and get stored in ServletResponse object.
-- Container will take the dynamic response from ServletResponse object and dispatch that back to the client.
-- Developer job when it comes matters service() method is;
-   => Get some input data from ServletRequest object.
-   => Use that data in application logic||prapare application logic.
-   => Prepare some dynamic response
-   => Give that dynamic Response to ServletResponse object.
-- When we keep the dynamic response in ServletResponse object, Container is responsible to get the response from here and then submit that response data to the respective client.
-- How to dispatch response to the Client, Container and server will take care of that. This won't be our concern!
-- How to get data from ServletRequest object, we will get to know about this later.
-- How to keep some response in ServletResponse object, then we will follow the below steps;
-
-1. Set Response Type to the response object.
-- Means: which type of response we need to generate from this Servlet, that we have to set.
-   res.setContentType("text/html")
-- If you set the response type to text/html, means text||html kind of data will be stored in ResponseFormat header part.
- Note: The default content type in Servlets is "text/html" only.
-
-2. get PrintWriter object.
-   PrintWriter out = res.getWriter();
-
-3. Send response data to Response object.
-   out.println("<html>");
-   out.println("<body>");
-   out.println("Welcome To Servlets");
-   out.println("</body>");
-   out.println("</html>");
-
-Above are the 3 steps to prepare service method.
-
-
-Preparing first Servlet application.
---------------------------------------
-Inside webapps folder; I need to prepare my Servlet applications as below:
-
-<web-app>
-  <servlet>
-     <servlet-name>WelcomeServlet</servlet-name>
-     <servlet-class>WelcomeServlet</servlet-class>
-  </servlet>
-    
-  <servlet-mapping>
-    <servlet-name>WelcomeServlet</servlet-name>
-    <url-pattern>/welcome</url-pattern>
-  </servlet-mapping>
-<web-app>
-
-import javax.servlet.*;
-import java.io.*;
-
-public class WelcomeServlet implements Servlet
-{
-// main() method should not be provided. As Container will take care of managing Servlet lifecycle
-
-//init() method
-   public void init(ServletConfig config) throws ServletException
-   {
-   }
-//service() method
-  public void service(ServletRequest, ServletResponse)throws ServletException, IOException
-   {
-     response.setContentType("text/html");
-     PrintWriter out = response.getWriter();
-
-     out.println("<html>");
-     out.println("<body>");
-     out.println("<h2>");
-     out.println("<font color='red'>");
-     out.println("<b>");
-     out.println("Welcome to get_tt_right.com");
-     out.println("</b><hr></font></h2></body></html>");
-   }
-// getServletConfig method
-  public ServletConfig getServletConfig()
-  {
-     return null;
-  }
-// getServletInfo method
-  public String getServletInfo()
-  {
-    return "";
-  }
-
-// destroy method
-  public void destroy()
-  {
-   
-  }
-  
-}
 
 
 
