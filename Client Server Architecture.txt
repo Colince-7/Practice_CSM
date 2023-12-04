@@ -616,7 +616,7 @@ Ans.  3 approaches are available.
 
 1. By implementing servlet Interface
 ---------------------------------------
-- public class MyServlet implements javax.servlet.Servlet{
+- public clas s MyServlet implements javax.servlet.Servlet{
          //Impl all methods of Servlet interface
    }
 
@@ -641,13 +641,14 @@ public class MyServlet extends HttpServlet{
 Activities Perfomerd by Container
 -------------------------------------
 Container will come to webapps folder.
-It will recognize all the applications.
+It will recognize all the web applications which we have prepared.
 It will go ahead and deploy all these application onto the server.
-For each and every deployed object, Container will create a Servlet object which we can refer to as: ServletContext object.
+Deployment in the sense-loading the total web application into the Server space||Server operational area.
+For each and every deployed application, Container will create a separate object which we can refer to as: ServletContext object.
 At the time of deploying of our web applications, container will search for web.xml file under WEB-INF folder.
 If available it will load this web.xml file, parse it and read data from this web.xml file.
 As part of this parsing phase, if any error is identified in web.xml file, server console will raise this parsing exceptions.
-If no mistakes are identified in the web.xml file, then the contents of this web.xml file will be stored in ServletContext object.
+If no mistakes are identified in the web.xml file, then the contents of this web.xml file-application level data- will be stored in ServletContext object.
 Finally server is started and the status of our application will be: ready to execute. Nothing but our application is already deployed, ServletContext object is ready and web.xml file content is as well ready.
 Remaining thing is; waiting for request from client and trying to excute required application.
 On client machine Address bar is available, there we have to provide URL address
@@ -670,7 +671,7 @@ Container will take that application name; app01
 Next it will take that resource name; welcome. It will underatnd that this is the url || locator pattern for the a particular Servlet.
 To know for which Servlet this URL pattern belongs to, Container will go for web.xml file.
 In the web.xml file, whenever a mapping is existed between the url pattern and the respective Servlet class name, Container will go to classes folder and it will search if the respective Servlet.class file is existed.
-If it is not available, then Container will raise an Servlet exception like: Internal root: Class not found exception
+If it is not available, then Container will raise an Servlet exception like: Internal root cause: Class not found exception
 If it is available, then Container will execute the respective Servlet class by perfoming lifecycle actions.
 1. Servlet loading - Load the Specified Servlet class byte code to the memory.
 2. Servlet Instantiation- Container will creat an object for the loaded Servlet class.
@@ -700,7 +701,68 @@ When ResponseFormat is ready, protocol will carry it to the respective client wh
 Client knows what to do when it recieves this all total response.
 When client interprates and understands what it has to do with the total response, protocol will go ahead and terminate the connection what it has established previously.
 
+Whenever this connection is terminated, immediately Container will understand that response has reached to the respective client successfully and thus it is not required to manage ServletRequest and ServletResponse object at Server side hence Container will destroy them and go to waiting state. 
 
+The amount of time Container is in waiting state depends upon the type of Server whatever we have installed.
+While in this state, if another request for same Servlet resource is coming; Container will immediately just process that resource bypassing the loading, instantiation and initialization phases. Directly it will create a thread and execute service() method.
+
+Like this second request onwards Container will be creating a separate thread and executing service() method without re-performing loading, instantiation and initialization.
+
+If no further request is coming for the same Servlet resource, then container will immediately understand that it needs to destroy the Servlet resource object.
+
+Just before destroying the Servlet reource object, it will have to destroy the ServletConfig object first.
+
+Once the Servlet resource object is destroyed, then Container will unload that loaded Servlet resource byte code and the Servlet lifecycle will have been completed.
+
+When we undeploy the Web application from the server or when we shuttdown the Server, immediatey Container will destroy ServletContext object.
+
+This is all we need to understand about our Servlet lifecycle.
+
+
+
+Preparing Dynamic Web Applicstion-Servlet Application- with Eclipse IDE.
+-------------------------------------------------------------------------
+Create a Dynamic Web Project
+Fill up the following in the wizard:
+1. Project name: Name of your application
+2. Target runtime: In the sense server
+   - For Servlets, runtime is provided by servers only.
+   - Here since I want to use Tomcat server. You need to select it.
+   - If you try selecting initially, nothing is available. What does this mean?
+   - We need to configure Tomcat server to our eclipse IDE, then we can select it.
+   - So, click on new runtime
+   - A wizard will appear with servers information that eclipse supports.
+   - Since Tomcat sever is available under apache, expand that menu and select the Tomcat version to match what you have installed on your machine. I.e., Tomcat 10.1
+   -  Click next.
+   -  Specify the Tomcat Home directory by browsing to where it is in your directory structure. I.e., C:\Program Files\Apache Software Foundation\Tomcat 10.1
+   - Click finish.
+3. Dynamic web module version.
+  - This is nothing but the servlet version.
+  - Better to specify 2.5 and not 3.0 and above.Reason:
+  - If you specify any of 3.0 and above versions; web.xml file will not be generated. Annotation will instead come into picture. But for my practice am discussing about web.xml file more for clarity purpose about the concepts.
+  -  This annotations you can see them later if and if your Company is building Servlet things.Haha.
+4. Click on next button.
+5. Click on next button.
+6. Click Finish and your project will be happily created.
+
+Prepare a Simple Generic Servlet
+---------------------------------
+Create your Servlet under src.
+ - Right click on src folder and choose: servlet.
+ - A wizard will appear. In this, we need to fill-up information concerning our servlet.
+    +. Package name
+    +. Your Servlet name.
+    +. Modify the super-class to your preferred. For my case I need my super class as GenericServlet.
+ - Click next.
+ - Url mapping information you need to provide.
+    +. Select the provided url mapping default generated url and edit that to your suitable url pattern name. i.e., welcome
+ - Click on Next button. A wizard will show up to allow you select||deselect whatever thing you need to have||not in your Servlet class. So, select; 
+    +. de-select constructor. I don't need that.
+ - Finally click on finish button and your GenericServlet will be created now.  
+
+
+
+ 
 
 
 
