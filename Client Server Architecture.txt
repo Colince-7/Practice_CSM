@@ -616,14 +616,15 @@ Ans.  3 approaches are available.
 
 1. By implementing servlet Interface
 ---------------------------------------
-- public clas s MyServlet implements javax.servlet.Servlet{
+- public clas s MyServlet implements jakarta.servlet.Servlet{
          //Impl all methods of Servlet interface
    }
 
 2. By extending GenericServlet abstract class.
 -----------------------------------------------
-- public class MyServlet extends javax.servlet.GenericServlet{
-        // implementation for all service provided methods. 
+- public class MyServlet extends jakarta.servlet.GenericServlet{
+        // implementation for service method is mandatory. 
+        // Implementaion of the other 4 methods is otional.
     }
 - Inside this GenericServlet, their is a method like service() Method.
 - In this service() method only we have to provide implementation part.
@@ -746,9 +747,48 @@ One more requirement is; each and every user-defined class that extends the medi
 
 This Mediator class is what we call as: Adapter class||Generic class.
 
+This Mediator class in Servlets concept is what we are refering to as: GenericServlet class.
+Any class that implements generic servlet must and should implement service() method. Think of this as our m25() method in the image above.
+The rest other 4 empty implementation methods present in GenericServlet Adapter class are optional to implement in our user-defined class.
 
 
+public abstract class GenericServlet implements Servlet {
 
+    private transient ServletConfig config;
+
+// init method from Servlet interface
+    public void init (ServletConfig config)throws ServletException
+    {
+        this.config = config;
+        init();
+    }
+    
+// init method from GenericServlet.
+    public void init()
+    {
+       // Jdbc set-up code you can write here.
+    }
+
+    public absatract void service(SevletRequest request, ServletResponse response)throws ServletException, IOException;
+   
+    public ServletConfig getServletConfig()
+    {
+       return config;
+    }
+
+    public void destroy()
+    {
+       config = null;
+    }
+}
+
+
+public class MyServlet extends GenericServlet {
+ ---Provide implementaion for service() method--- Mandatory!
+ ---Other methods implementaion are optional based on your requirements.--- 
+}
+
+Note: To a single resource; we can provide multiple URL patterns.
 
 Preparing Dynamic Web Applicstion-Servlet Application- with Eclipse IDE.
 -------------------------------------------------------------------------
