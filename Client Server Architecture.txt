@@ -718,6 +718,36 @@ When we undeploy the Web application from the server or when we shuttdown the Se
 
 This is all we need to understand about our Servlet lifecycle.
 
+Drawbacks of creating your Servlets application By implementing servlet Interface
+---------------------------------------------------------------------------------
+- In this approach, to prepare Servlet, we must implement jakarta.servlet.Servlet interface in a user-defined class, where we must implement all the methods of Servlet interface irrespective of the application requirements, this approach will increase unecessary methods implementations in Servlet class.
+
+To overcome the above problem we have to go for the second approach of  creating Servlets-that is; By extending GenericServlet abstract class.
+
+When implementing an interface, all the rules inside that interface we have to provide implementation irrespective of whether we require them or not. If not required, we have to provide empty implementations.
+
+Now, assume my interface is providing 50 rules. Now, in my implementation class, I only require to implement one rule. This means, I will require to provide 49 empty implementations as well. This kind of thing is not suggestable.
+
+The above scenario is a design problem. To solve it we have to go for design pattern.
+
+The solution to the above issue is provided by the Adapter pattern.
+
+Adapter Pattern
+-----------------
+Provide a mediator class, that implements all the 50 rules of the the interface.
+The implementations in this class are; empty implementations.
+Now extend your class from this mediator class and override your required method.
+This is what exactly adapter pattern solution suggests.
+
+Now my implemenattion logic I need in my user-defined class and not the mediator class. This is the mandatory condition I need.
+Means, If I want to create object for my user-defined classes only and prevent creation of objects for Mediator class, then I need to make the Mediator class as abstract.
+
+One more requirement is; each and every user-defined class that extends the mediator class has to MUST provide implemenation for a certain method. To actualize this requirement; I will need to make that method as abstract.
+
+This Mediator class is what we call as: Adapter class||Generic class.
+
+
+
 
 
 Preparing Dynamic Web Applicstion-Servlet Application- with Eclipse IDE.
