@@ -1,3 +1,50 @@
+ServletContext object
+- To maneg context parameters in web applications wehave to use the following steps:
+1. Declare context parameters in web.xml file
+----------------------------------------------
+- Provided directly under <web-app></web-app> tag as follows:
+Note: If you provide context parameters like above in web.xml file, then container will read all context parameters from web.xml file and it will store them in ServletContext object at the time of web application deployment..
+2. Read context parameters from ServletContext object.
+-------------------------------------------------------------
+- To read value of a particular context parameter on the basis of name:
+  public String getInitParameter(String name)
+  Ex: String val = context.getInitParameter("name")
+- To read all names of context parameter from ServletContext object, then we have to use the following logic:
+  public Enumaration getInitParameterNames()
+Ex: Enumaration e = context.getInitParameterNames();
+    while(e.hasMoreElements())
+     {
+       out.println(e.nextElement());
+     }
+To keep attributes data-dynamic data- in ServletContext object:
+  public void setAttribute(String name, Object value)
+To get value of an attribte from ServletContext:
+  public Object getAttribute(String name)
+To remove an attribute from ServletContext object:
+  public void removeAttribute(String name)
+To get all names of the attributes from ServletContext object:
+  public Enumartion getAttributeNames()
+  - How to read data from Enumaration that we have seen.
+Note: To get o/p that  is itarated upon as a single variable: You can intialize a String outside the loop and concatanate the output to it in the loop.
+
+
+
+Q. What is Foreign Context
+---------------------------
+- It is a ServletContext object of other application being executed at the same server.
+- To get Foreign context:
+public ServletContext getContext(String path)
+- If present server is supporting the above method; then it will return ForeignContext object reference.
+- Else, getContext() method will return null value.
+- Like this in a nut-shell; application server may or may not support it.
+
+
+
+
+
+
+
+
 Client Server Architecture
 =============================
 Q.With respect to web applications, what exactly is the C-S architecture required?
